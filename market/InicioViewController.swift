@@ -100,7 +100,7 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.performSegue(withIdentifier: "datosView", sender: self)
             break
         case 5:
-            
+            self.performSegue(withIdentifier: "direccionesRealView", sender: self)
             break
         case 6:
             btnLogOut()

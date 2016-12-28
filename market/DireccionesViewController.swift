@@ -103,9 +103,8 @@ class DireccionesViewController: UIViewController, UITableViewDelegate, UITableV
     // Ordenes dinamicas
     
     func insertNewObject(order: Order) {
-        items.insert(order, at: 0)
-        let indexPath = IndexPath(row: 0, section: 0)
-        contenedorDirecciones.insertRows(at: [indexPath], with: .automatic)
+        items.append(order)
+        contenedorDirecciones.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

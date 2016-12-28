@@ -25,8 +25,6 @@ class Facade {
     
     let STR_DATE_FORMAT = "yyyy-MM-dd"
     
-    var productoPass: Producto = Producto()
-    
     func parametrosBasicos() -> String {
         return "output_format=JSON&\(parametrosKey())"
     }
@@ -64,7 +62,7 @@ class Facade {
         for (_, subJson):(String, JSON) in array {
             id.append(subJson["id"].stringValue)
         }
-        return id;
+        return id
     }
     
     func buscarOrden(res: Any) -> Order {
@@ -135,6 +133,47 @@ class Facade {
                      conversion_rate: buscarJson(json: elemento, element: "conversion_rate"),
                      reference: buscarJson(json: elemento, element: "reference"),
                      productos: orderItem)
+    }
+    
+    //Address
+    func existenDirecciones(res: Any) -> [String] {
+        var id = [String]()
+        let json = JSON(res)
+        let array = json["addresses"]
+        
+        for (_, subJson):(String, JSON) in array {
+            id.append(subJson["id"].stringValue)
+        }
+        return id
+    }
+    
+    func buscarDireccion(res: Any) -> Direccion {
+        let json = JSON(res)
+        let elemento = json["address"]
+        return Direccion(id: buscarJson(json: elemento, element: "id"),
+                         id_customer: buscarJson(json: elemento, element:"id_customer" ),
+                         id_manufacturer: buscarJson(json: elemento, element: "id_manufacturer" ),
+                         id_supplier: buscarJson(json: elemento, element: "id_supplier" ),
+                         id_warehouse: buscarJson(json: elemento, element: "id_warehouse" ),
+                         id_country: buscarJson(json: elemento, element: "id_country" ),
+                         id_state: buscarJson(json: elemento, element: "id_state" ),
+                         alias: buscarJson(json: elemento, element: "alias" ),
+                         company: buscarJson(json: elemento, element: "company" ),
+                         lastname: buscarJson(json: elemento, element: "lastname" ),
+                         firstname: buscarJson(json: elemento, element: "firstname" ),
+                         vat_number: buscarJson(json: elemento, element: "vat_number" ),
+                         address1: buscarJson(json: elemento, element: "address1" ),
+                         address2: buscarJson(json: elemento, element: "address2" ),
+                         postcode: buscarJson(json: elemento, element: "postcode" ),
+                         city: buscarJson(json: elemento, element: "city" ),
+                         other: buscarJson(json: elemento, element: "other" ),
+                         phone: buscarJson(json: elemento, element: "phone" ),
+                         phone_mobile: buscarJson(json: elemento, element: "phone_mobile" ),
+                         dni: buscarJson(json: elemento, element: "dni" ),
+                         deleted: buscarJson(json: elemento, element: "deleted" ),
+                         date_add: buscarJson(json: elemento, element: "date_add" ),
+                         date_upd: buscarJson(json: elemento, element: "date_upd" )
+        )
     }
     
     // Customers
@@ -460,6 +499,36 @@ class Facade {
             id.append(subJson["id"].stringValue)
         }
         return id
+    }
+    
+    func buscarEnvio(res: Any) -> Carrier {
+        let json = JSON(res)
+        let elemento = json["carrier"]
+        
+        return Carrier(delay: buscarJson(json: elemento, element: "delay"),
+                       id: buscarJson(json: elemento, element: "id"),
+                       deleted: buscarJson(json: elemento, element: "deleted"),
+                       is_module: buscarJson(json: elemento, element: "is_module"),
+                       id_tax_rules_group: buscarJson(json: elemento, element: "id_tax_rules_group"),
+                       id_reference: buscarJson(json: elemento, element: "id_reference"),
+                       name: buscarJson(json: elemento, element: "name"),
+                       active: buscarJson(json: elemento, element: "active"),
+                       is_free: buscarJson(json: elemento, element: "is_free"),
+                       url: buscarJson(json: elemento, element: "url"),
+                       shipping_handling: buscarJson(json: elemento, element: "shipping_handling"),
+                       shipping_external: buscarJson(json: elemento, element: "shipping_external"),
+                       range_behavior: buscarJson(json: elemento, element: "range_behavior"),
+                       shipping_method: buscarJson(json: elemento, element: "shipping_method"),
+                       max_width: buscarJson(json: elemento, element: "max_width"),
+                       max_height: buscarJson(json: elemento, element: "max_height"),
+                       max_depth: buscarJson(json: elemento, element: "max_depth"),
+                       max_weight: buscarJson(json: elemento, element: "max_weight"),
+                       grade: buscarJson(json: elemento, element: "grade"),
+                       external_module_name: buscarJson(json: elemento, element: "external_module_name"),
+                       need_range: buscarJson(json: elemento, element: "need_range"),
+                       position: buscarJson(json: elemento, element: "position"),
+                       deliveries: Deliveries()
+        )
     }
     
     
