@@ -46,9 +46,9 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
         galeria.delegate = self
         galeria.dataSource = self
         
-        //contenedorFeatures.delegate = self
-        //contenedorFeatures.dataSource = self
-        //contenedorFeatures.isHidden = true
+        contenedorFeatures.delegate = self
+        contenedorFeatures.dataSource = self
+        contenedorFeatures.isHidden = true
         
         condicion.text = productoPass.condition
         nombre.text = productoPass.name
@@ -69,7 +69,7 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
         if (productoPass.features.count > 0) {
             buscarFeatures(features: productoPass.features, hijo: 0);
         } else {
-           // self.contenedorFeatures.isHidden = true
+            self.contenedorFeatures.isHidden = true
         }
     }
     
@@ -85,7 +85,7 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var count:Int?
         
-      /*  if collectionView == self.contenedorFeatures {
+        if collectionView == self.contenedorFeatures {
             if (feature_lista.count > 0 ) {
                 contenedorFeatures.isHidden = false
                 count = feature_lista.count
@@ -94,7 +94,7 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
                 count = 0
             }
         }
-        */
+        
         if collectionView == self.galeria {
             count =  productoPass.imagenes.count
         }
@@ -104,7 +104,7 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var celi: UICollectionViewCell?
-        /*
+        
         if collectionView == self.contenedorFeatures {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeatureViewCell", for: indexPath) as! FeatureViewCell
             
@@ -113,7 +113,7 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
             // tamaño de letra nombre 18
             cell.descripcion.text = feature.id
             celi = cell
-        }*/
+        }
         
         if collectionView == self.galeria {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GaleriaViewCell", for: indexPath) as! GaleriaViewCell
@@ -353,21 +353,6 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
         }
     }
     
-    func existeCarrito() {
-        Alamofire.request("\(self.facade.WEB_PAGE)/carts?filter[id_customer]=\(ID_USUARIO)?\(facade.parametrosBasicos())").validate().responseJSON { response in
-            switch response.result {
-            case .success:
-                //if let JSON = response.result.value {
-                //irCarrito(conversor.existeCarrito(res));
-                //}
-                break
-            case .failure(let error):
-                self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-                print(error)        // Poner en comentario
-            }
-        }
-    }
-    
     @IBAction func picker(_ sender: UIStepper) {
         valorStepper.text = Int(sender.value).description
     }
@@ -389,8 +374,9 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
             
             addEventViewController.nombre_desc = self.productoPass.name
             addEventViewController.cantidad_desc = "cantidad: \(self.cantidadPass)"
-            addEventViewController.total_desc = "total: \(PRECIO_NETO * Double(cantidadPass))"
-            addEventViewController.imagen_desc = "$\(self.productoPass.id)/\(self.productoPass.imagenes[0])"
+            addEventViewController.total_desc = "total: $\(PRECIO_NETO * Double(cantidadPass))"
+            addEventViewController.imagen_desc = "\(self.productoPass.id)/\(self.productoPass.imagenes[0])"
+            addEventViewController.ID_USUARIO = self.ID_USUARIO
         }
     }
 

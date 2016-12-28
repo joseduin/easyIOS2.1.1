@@ -27,6 +27,7 @@ class CategoriasXMLViewController: UIViewController, UITableViewDelegate, UITabl
     let facade: Facade = Facade()
     
     var ID_USUARIO: String = ""
+    var categoriaPass: Categoria = Categoria()
     var TITULO: Int = 0
     var CATEGORIA_PADRE: Categoria = Categoria()
     var PADRE: String = ""
@@ -145,10 +146,8 @@ class CategoriasXMLViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //self.orderPass = items[indexPath.row]
-        //performSegue(withIdentifier: "direccionView", sender: nil)
-        
-        print(indexPath.row)
+        self.categoriaPass = categoria_lista[indexPath.row]
+        performSegue(withIdentifier: "CategoriaXMLSelf", sender: nil)
     }
     
     func buscarProductos() {
@@ -225,6 +224,16 @@ class CategoriasXMLViewController: UIViewController, UITableViewDelegate, UITabl
             let addEventViewController = nav.topViewController as! ProductoDetalleViewController
             
             addEventViewController.productoPass = self.productoPass
+        }
+        
+        if segue.identifier == "CategoriaXMLSelf" {
+            
+            let nav = segue.destination as! UINavigationController
+            let addEventViewController = nav.topViewController as! CategoriasXMLViewController
+            
+            addEventViewController.TITULO = 1
+            addEventViewController.PADRE = self.CATEGORIA_PADRE.name
+            addEventViewController.CATEGORIA_PADRE = self.categoriaPass
         }
     }
 
