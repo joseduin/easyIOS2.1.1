@@ -2003,7 +2003,7 @@ RGlyZWNjaRvDs24
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XFY-cc-CEG">
-                                <rect key="frame" x="0.0" y="582" width="375" height="33"/>
+                                <rect key="frame" x="0.0" y="590" width="375" height="33"/>
                                 <color key="backgroundColor" red="1" green="0.38431372549019605" blue="0.070588235294117646" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <state key="normal" title="Agregar Dirección">
@@ -2016,7 +2016,7 @@ RGlyZWNjaRvDs24
                             <constraint firstItem="1xA-kr-hV8" firstAttribute="top" secondItem="ZUS-We-TyO" secondAttribute="bottom" constant="37" id="0G1-fd-yXV"/>
                             <constraint firstAttribute="trailing" secondItem="XFY-cc-CEG" secondAttribute="trailing" id="2ak-gy-fS8"/>
                             <constraint firstItem="XFY-cc-CEG" firstAttribute="leading" secondItem="8Dw-ny-xWb" secondAttribute="leading" id="2ge-t3-HpC"/>
-                            <constraint firstItem="Ubg-fk-F8X" firstAttribute="top" secondItem="XFY-cc-CEG" secondAttribute="bottom" constant="8" id="RNR-hx-dHJ"/>
+                            <constraint firstItem="Ubg-fk-F8X" firstAttribute="top" secondItem="XFY-cc-CEG" secondAttribute="bottom" id="RNR-hx-dHJ"/>
                             <constraint firstItem="1xA-kr-hV8" firstAttribute="leading" secondItem="XFY-cc-CEG" secondAttribute="leading" id="m3N-Y9-v8H"/>
                             <constraint firstItem="1xA-kr-hV8" firstAttribute="trailing" secondItem="XFY-cc-CEG" secondAttribute="trailing" id="vRj-Dm-xU3"/>
                         </constraints>
