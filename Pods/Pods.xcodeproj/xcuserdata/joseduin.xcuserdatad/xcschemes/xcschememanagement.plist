@@ -29,6 +29,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>PKYStepper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-market.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -43,6 +48,16 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>184A1650DC0B648BD756068E60BF2C59</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>37474DBBDC570DD8A2CF0B4B2E04C68F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6AADB21605D0423AA59A5A344076A6FB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,12 +77,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BD3314C72EA4B58E4CFEDE23396EF6AD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C16B5358A3A3AC64133579FAD7F63F01</key>
+		<key>9E80B80039E35F86FEE9E1E644DB791A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

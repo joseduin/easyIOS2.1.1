@@ -8,8 +8,3 @@
 
 import Foundation
 
-class Prueba {
-     
-}
-
-

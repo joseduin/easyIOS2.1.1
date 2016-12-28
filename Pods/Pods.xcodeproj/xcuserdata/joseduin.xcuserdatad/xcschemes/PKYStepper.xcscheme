@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '37474DBBDC570DD8A2CF0B4B2E04C68F'
-               BlueprintName = 'SwiftyJSON'
+               BlueprintIdentifier = '6AADB21605D0423AA59A5A344076A6FB'
+               BlueprintName = 'PKYStepper'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SwiftyJSON.framework'>
+               BuildableName = 'PKYStepper.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

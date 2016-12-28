@@ -138,8 +138,9 @@ class DireccionesViewController: UIViewController, UITableViewDelegate, UITableV
             case .success:
                 if let JSON = response.result.value {
                     let valor = self.facade.buscarEstado(res: JSON)
-                    let estado: String = "<span style=\"background-color:\(valor.color); border-color:\(valor.color);padding: 6px 10px; color: white;\">\(valor.nombre)</span>";
-                    web.loadHTMLString(estado, baseURL: nil)                }
+                    let estado: String = "<span style=\"background-color:\(valor.color); border-color:\(valor.color);padding: 6px 10px; color: white;\">\(valor.nombre)</span>"
+                    web.loadHTMLString(estado, baseURL: nil)
+                }
             case .failure(let error):
                 self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
                 print(error)        // Poner en comentario

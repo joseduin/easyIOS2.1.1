@@ -32,6 +32,11 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>app-easymarket.com/service/examples</key>
+			<dict>
+				<key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
 			<key>webserviceeasy-kevingn.c9users.io/examples</key>
 			<dict>
 				<key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>

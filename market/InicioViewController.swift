@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -15,7 +16,10 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var correoNavigation: UILabel!
     @IBOutlet weak var menuContenedor: UITableView!
     
+    let facade: Facade = Facade()
+    
     var items : [NavigationModel]!
+    var CATEGORIA_PADRE: Categoria = Categoria()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +52,7 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
         menuContenedor.separatorStyle = .none
         menuContenedor.backgroundColor = UIColor.clear
         
-        let item1 = NavigationModel(title: "Categorias", icon: "ic_local_activito")
+        let item1 = NavigationModel(title: "Categorias", icon: "ic_local_activity")
         let item2 = NavigationModel(title: "Mis Ordenes", icon: "ic_assignment")
         let item3 = NavigationModel(title: "Carrito", icon: "ic_shopping_cart_48pt")
         let itemEmpty = NavigationModel(title: "", icon: "")
@@ -83,8 +87,11 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let index = indexPath[1]
         switch index {
+        case 0:
+            buscarCategorias()
+            break
         case 1:
-            print(items[index].title)
+            self.performSegue(withIdentifier: "direccionesView", sender: self)
             break
         case 2:
             print(items[index].title)
@@ -93,7 +100,7 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.performSegue(withIdentifier: "datosView", sender: self)
             break
         case 5:
-            self.performSegue(withIdentifier: "direccionesView", sender: self)
+            
             break
         case 6:
             btnLogOut()
@@ -103,6 +110,32 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    func buscarCategorias() {
+        Alamofire.request("\(self.facade.WEB_PAGE)/categories/22?\(facade.parametrosBasicos())").validate().responseJSON { response in
+            switch response.result {
+            case .success:
+                if let JSON = response.result.value {
+                    self.CATEGORIA_PADRE = self.facade.buscarCategoria(res: JSON)
+                    self.performSegue(withIdentifier: "CategoriasXMLViewController", sender: self)
+                }
+            case .failure(let error):
+                self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
+                print(error)        // Poner en comentario
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CategoriasXMLViewController" {
+            
+            let nav = segue.destination as! UINavigationController
+            let addEventViewController = nav.topViewController as! CategoriasXMLViewController
+            
+            addEventViewController.CATEGORIA_PADRE = self.CATEGORIA_PADRE
+            addEventViewController.TITULO = 0
+            addEventViewController.PADRE = ""
+        }
+    }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
@@ -203,6 +236,23 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    
+    func mensaje(mensaje: String, cerrar: Bool) {
+        let mostrarMensaje = UIAlertController(title: "Mensaje", message: mensaje, preferredStyle: UIAlertControllerStyle.alert)
+        
+        if (cerrar) {
+            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) {
+                action in
+                self.dismiss(animated: true, completion: nil)
+            }
+            mostrarMensaje.addAction(okAction)
+        } else {
+            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil)
+            mostrarMensaje.addAction(okAction)
+        }
+        
+        self.present(mostrarMensaje, animated: true, completion: nil)
+    }
     
 }
 

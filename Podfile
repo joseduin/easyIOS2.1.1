@@ -9,5 +9,6 @@ target 'market' do
     pod 'CryptoSwift'
     pod 'DatePickerDialog'
     pod 'LTHRadioButton'
+    pod 'PKYStepper', '0.0.1'
 end
 

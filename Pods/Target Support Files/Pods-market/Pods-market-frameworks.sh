@@ -89,6 +89,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/DatePickerDialog/DatePickerDialog.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Haneke/Haneke.framework"
   install_framework "$BUILT_PRODUCTS_DIR/LTHRadioButton/LTHRadioButton.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/PKYStepper/PKYStepper.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -97,5 +98,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/DatePickerDialog/DatePickerDialog.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Haneke/Haneke.framework"
   install_framework "$BUILT_PRODUCTS_DIR/LTHRadioButton/LTHRadioButton.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/PKYStepper/PKYStepper.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
 fi
