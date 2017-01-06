@@ -12,7 +12,6 @@ import Haneke
 
 class CategoriasXMLViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource {
 
-    // Hacer productos land
     // Listener para ambos scroll
     
     @IBOutlet weak var imagenBanner: UIImageView!
@@ -23,6 +22,7 @@ class CategoriasXMLViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var existencia: UILabel!
     @IBOutlet weak var contenedorCategorias: UICollectionView!
     @IBOutlet weak var contenedorProductos: UITableView!
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     
     let facade: Facade = Facade()
     
@@ -51,6 +51,8 @@ class CategoriasXMLViewController: UIViewController, UITableViewDelegate, UITabl
         contenedorProductos.separatorStyle = .none
         contenedorProductos.backgroundColor = UIColor.clear
         contenedorProductos.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
+        
+        //contenedorProductos.isScrollEnabled = false;
  
         subcategoria.isHidden = true
         flecha_izq.isHidden = true
@@ -84,6 +86,12 @@ class CategoriasXMLViewController: UIViewController, UITableViewDelegate, UITabl
             contarProductosImpresos = 1
             buscarProductos()
         }
+    }
+    
+    override func updateViewConstraints() {
+        super.updateViewConstraints()
+        print(String(describing: contenedorProductos.contentSize.height))
+        //tableViewHeightConstraint?.constant = contenedorProductos.contentSize.height
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -141,7 +149,7 @@ class CategoriasXMLViewController: UIViewController, UITableViewDelegate, UITabl
         let categoria = categoria_lista[indexPath.row]
         self.buscarImagen(id: categoria.id, tipo: "categories", imagenSize: "medium_default", imagen: cell.imagen)
         cell.descripcion.text = categoria.name
-        
+        //updateViewConstraints()
         return cell
     }
     

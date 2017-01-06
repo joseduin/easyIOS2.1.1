@@ -60,7 +60,12 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let item5 = NavigationModel(title: "Mis Direcciones", icon: "ic_receipt")
         let item6 = NavigationModel(title: "Cerrar Sesión", icon: "ic_lock_48pt")
         
-        items = [item1, item2, item3, itemEmpty, item4, item5, item6]
+        // Prueba
+        let item7 = NavigationModel(title: "Como comprar", icon: "ic_lock_48pt")
+        let item8 = NavigationModel(title: "Contactenos", icon: "ic_lock_48pt")
+
+        
+        items = [item1, item2, item3, itemEmpty, item4, item5, item6, item7, item8]
         
         isLogin()
     }
@@ -105,6 +110,14 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
         case 6:
             btnLogOut()
             break
+            
+            
+            // Prueba
+        case 7:
+            self.performSegue(withIdentifier: "ComoComprarViewController", sender: self)
+            break;
+        case 8:
+            self.performSegue(withIdentifier: "ContactoViewController", sender: self)
         default:
             print(items[index].title)
         }
@@ -228,6 +241,10 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     // Botones
+    @IBAction func irBusqueda(_ sender: Any) {
+        self.performSegue(withIdentifier: "BusquedaViewController", sender: self)
+    }
+    
     @IBAction func btnNavigation(_ sender: Any) {
         if (menuView.isHidden) {
             sliderBarOpen(option: true)
@@ -235,7 +252,6 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
             sliderBarOpen(option: false)
         }
     }
-    
     
     func mensaje(mensaje: String, cerrar: Bool) {
         let mostrarMensaje = UIAlertController(title: "Mensaje", message: mensaje, preferredStyle: UIAlertControllerStyle.alert)

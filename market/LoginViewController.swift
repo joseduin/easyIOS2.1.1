@@ -103,6 +103,9 @@ class LoginViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func btnAtras(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     func mensaje(mensaje: String, cerrar: Bool) {
         let mostrarMensaje = UIAlertController(title: "Mensaje", message: mensaje, preferredStyle: UIAlertControllerStyle.alert)
@@ -120,15 +123,5 @@ class LoginViewController: UIViewController {
         
         self.present(mostrarMensaje, animated: true, completion: nil)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

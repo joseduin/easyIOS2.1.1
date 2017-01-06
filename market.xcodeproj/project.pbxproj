@@ -51,6 +51,10 @@
 		F0E41C101DE3F4A0000CCD4A /* MenuViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E41C0F1DE3F4A0000CCD4A /* MenuViewCell.swift */; };
 		F0EB2D211DE2995D00C46463 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EB2D201DE2995D00C46463 /* Customer.swift */; };
 		F0EB2D241DE2BB5000C46463 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EB2D231DE2BB5000C46463 /* logo.png */; };
+		F0ECD1381E1EDA8A00BAB239 /* ComoComprarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0ECD1371E1EDA8A00BAB239 /* ComoComprarViewController.swift */; };
+		F0ECD13A1E1EE00B00BAB239 /* como_comprar.png in Resources */ = {isa = PBXBuildFile; fileRef = F0ECD1391E1EE00B00BAB239 /* como_comprar.png */; };
+		F0ECD13C1E1EE2CD00BAB239 /* ContactoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0ECD13B1E1EE2CD00BAB239 /* ContactoViewController.swift */; };
+		F0F7B5A41E1F47D500070016 /* BusquedaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F7B5A31E1F47D500070016 /* BusquedaViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -125,6 +129,10 @@
 		F0E41C0F1DE3F4A0000CCD4A /* MenuViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewCell.swift; sourceTree = "<group>"; };
 		F0EB2D201DE2995D00C46463 /* Customer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		F0EB2D231DE2BB5000C46463 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../../logo.png; sourceTree = "<group>"; };
+		F0ECD1371E1EDA8A00BAB239 /* ComoComprarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComoComprarViewController.swift; sourceTree = "<group>"; };
+		F0ECD1391E1EE00B00BAB239 /* como_comprar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = como_comprar.png; sourceTree = "<group>"; };
+		F0ECD13B1E1EE2CD00BAB239 /* ContactoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactoViewController.swift; sourceTree = "<group>"; };
+		F0F7B5A31E1F47D500070016 /* BusquedaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusquedaViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +212,9 @@
 				F05A93251E1404E9001AD29D /* DireccionesRealViewCell.swift */,
 				F05A93271E1407C2001AD29D /* DireccionesRealViewController.swift */,
 				F05A93291E140807001AD29D /* DireccionRealViewController.swift */,
+				F0ECD1371E1EDA8A00BAB239 /* ComoComprarViewController.swift */,
+				F0ECD13B1E1EE2CD00BAB239 /* ContactoViewController.swift */,
+				F0F7B5A31E1F47D500070016 /* BusquedaViewController.swift */,
 			);
 			path = market;
 			sourceTree = "<group>";
@@ -230,6 +241,7 @@
 		F0EB2D221DE2BB1B00C46463 /* imagen */ = {
 			isa = PBXGroup;
 			children = (
+				F0ECD1391E1EE00B00BAB239 /* como_comprar.png */,
 				F05A7A3D1E02DB0E00455568 /* placeholder.png */,
 				F0DAB4F41DF67D9C007A3A37 /* carrito_inicio.png */,
 				F0DAB4F51DF67D9C007A3A37 /* direcciones_inicio.png */,
@@ -320,6 +332,7 @@
 				F0DAB4F81DF67D9D007A3A37 /* carrito_inicio.png in Resources */,
 				F05A7A3E1E02DB0E00455568 /* placeholder.png in Resources */,
 				F0E41C0D1DE3D8C6000CCD4A /* Assets.xcassets in Resources */,
+				F0ECD13A1E1EE00B00BAB239 /* como_comprar.png in Resources */,
 				F094167D1DDFA20800626583 /* Main.storyboard in Resources */,
 				F0DAB4FA1DF67D9D007A3A37 /* mis_pedidos_inicio.png in Resources */,
 				F0DAB4F91DF67D9D007A3A37 /* direcciones_inicio.png in Resources */,
@@ -381,6 +394,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0F7B5A41E1F47D500070016 /* BusquedaViewController.swift in Sources */,
 				F08117941E0B297C008A7EC5 /* GaleriaViewCell.swift in Sources */,
 				F094168C1DDFBE6F00626583 /* LoginViewController.swift in Sources */,
 				F091735F1DF7881700048B10 /* InicioViewController.swift in Sources */,
@@ -400,7 +414,9 @@
 				F0065EB41E021D0600658DD4 /* CategoriasXMLViewController.swift in Sources */,
 				F05A93301E1408B1001AD29D /* Deliveries.swift in Sources */,
 				F0065EB61E021D5C00658DD4 /* Categoria.swift in Sources */,
+				F0ECD1381E1EDA8A00BAB239 /* ComoComprarViewController.swift in Sources */,
 				F05A93261E1404E9001AD29D /* DireccionesRealViewCell.swift in Sources */,
+				F0ECD13C1E1EE2CD00BAB239 /* ContactoViewController.swift in Sources */,
 				F0332FC21DF8B6A9003F64AB /* CardView.swift in Sources */,
 				F0065EB21E0212D000658DD4 /* Producto.swift in Sources */,
 				F00F8C071DF7D1CB00EDC7A5 /* DireccionesViewCell.swift in Sources */,

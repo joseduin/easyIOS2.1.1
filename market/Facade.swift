@@ -390,6 +390,17 @@ class Facade {
                         features: features)
     }
     
+    func buscarProductoSearch(res: Any) -> [Producto] {
+        var productos: [Producto] = [Producto]()
+        let json = JSON(res)
+        let array = json["products"]
+
+        for (_, subJson):(String, JSON) in array {
+            productos.append(getProductos(elemento: subJson))
+        }
+        return productos;
+    }
+    
     func buscarFeatures(res: Any) -> String {
         let json = JSON(res)
         let elemento = json["product_feature_value"]

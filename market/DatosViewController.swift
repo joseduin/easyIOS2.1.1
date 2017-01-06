@@ -36,12 +36,21 @@ class DatosViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor(red:255/255.0, green: 98/255.0, blue: 18/255.0, alpha: 1)
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
+        txtApellido.text = UserDefaults.standard.value(forKey: "lastname") as! String?
+        txtNombre.text = UserDefaults.standard.value(forKey: "firstname") as! String?
+        txtEmail.text = UserDefaults.standard.value(forKey: "email") as! String?
+        txtFechaNac.text = UserDefaults.standard.value(forKey: "birthday") as! String?
+        
+        let gender : String = UserDefaults.standard.value(forKey: "id_gender") as! String
+
         btnSr.addSubview(radioSr)
         btnSra.addSubview(radioSra)
         
-        radioSr.select()
-        
-        // Poner los valores en los txt
+        if (gender == "1") {
+            radioSr.select()
+        } else {
+            radioSra.select()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -139,15 +148,5 @@ class DatosViewController: UIViewController {
     @IBAction func btnAtras(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
