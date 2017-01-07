@@ -24,6 +24,7 @@ class Facade {
     let ERROR_LOADING = "Revise su conexion a internet"
     
     let STR_DATE_FORMAT = "yyyy-MM-dd"
+    let IVA: Double = 12.00
     
     func parametrosBasicos() -> String {
         return "output_format=JSON&\(parametrosKey())"
@@ -352,7 +353,7 @@ class Facade {
                         online_only: buscarJson(json: elemento, element: "online_only"),
                         ecotax: buscarJson(json: elemento, element: "ecotax"),
                         minimal_quantity: buscarJson(json: elemento, element: "minimal_quantity"),
-                        price: String(format: "%.2f", Double(buscarJson(json: elemento, element: "price"))!),
+                        price: String(format: "%.2f", Double(buscarJson(json: elemento, element: "price"))! + (Double(buscarJson(json: elemento, element: "price"))! * IVA / 100)),
                         wholesale_price: buscarJson(json: elemento, element: "wholesale_price"),
                         unity: buscarJson(json: elemento, element: "unity"),
                         unit_price_ratio: buscarJson(json: elemento, element: "unit_price_ratio"),
@@ -420,6 +421,37 @@ class Facade {
         let elemento = json["stock_available"]
         
         return buscarJson(json: elemento, element: "quantity") == "0" ? "No está disponible" : buscarJson(json: elemento, element: "quantity")
+    }
+    
+    //Deliveries
+    func buscarDeliveries(res: Any) -> Array<String> {
+        let json = JSON(res)
+        var ids: Array<String> = Array<String>();
+        if (json == "[]") {
+            return ids;
+        } else {
+            let json = JSON(res)
+            let array = json["deliveries"]
+            
+            for (_, subJson):(String, JSON) in array {
+                ids.append(subJson["id"].stringValue)
+            }
+            return ids;
+        }
+    }
+    
+    func buscarDelivery(res: Any) -> Deliveries{
+        let json = JSON(res)
+        let elemento = json["delivery"]
+        
+        return Deliveries(id: buscarJson(json: elemento, element: "id"),
+                          id_range_price: buscarJson(json: elemento, element: "id_range_price"),
+                          id_range_weight: buscarJson(json: elemento,element:  "id_range_weight"),
+                          id_zone: buscarJson(json: elemento, element: "id_zone"),
+                          id_shop_group: buscarJson(json: elemento, element: "id_shop_group"),
+                          price: buscarJson(json: elemento, element: "price")
+        )
+        
     }
     
     // Carrito
@@ -542,6 +574,31 @@ class Facade {
         )
     }
     
+    
+    // Conf 
+    func configurations(res: Any) -> String {
+        var id: String = "";
+        /*if (res == "[]") {
+         return id;
+         } else {*/
+        let json = JSON(res)
+        let elemento = json["configurations"]
+        
+        for (_, subJson):(String, JSON) in elemento {
+            id = subJson["id"].stringValue
+        }
+        
+        return id;
+        //}
+    }
+    
+    
+    func configuration(res: Any) -> String {
+        let json = JSON(res)
+        let elemento = json["configuration"]
+        
+        return buscarJson(json: elemento, element: "value");
+    }
     
     // Conversores
     

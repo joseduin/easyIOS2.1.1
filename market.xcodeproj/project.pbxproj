@@ -55,6 +55,7 @@
 		F0ECD13A1E1EE00B00BAB239 /* como_comprar.png in Resources */ = {isa = PBXBuildFile; fileRef = F0ECD1391E1EE00B00BAB239 /* como_comprar.png */; };
 		F0ECD13C1E1EE2CD00BAB239 /* ContactoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0ECD13B1E1EE2CD00BAB239 /* ContactoViewController.swift */; };
 		F0F7B5A41E1F47D500070016 /* BusquedaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F7B5A31E1F47D500070016 /* BusquedaViewController.swift */; };
+		F0F7B5A61E21149D00070016 /* CarritoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F7B5A51E21149D00070016 /* CarritoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -133,6 +134,7 @@
 		F0ECD1391E1EE00B00BAB239 /* como_comprar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = como_comprar.png; sourceTree = "<group>"; };
 		F0ECD13B1E1EE2CD00BAB239 /* ContactoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactoViewController.swift; sourceTree = "<group>"; };
 		F0F7B5A31E1F47D500070016 /* BusquedaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusquedaViewController.swift; sourceTree = "<group>"; };
+		F0F7B5A51E21149D00070016 /* CarritoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarritoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +217,7 @@
 				F0ECD1371E1EDA8A00BAB239 /* ComoComprarViewController.swift */,
 				F0ECD13B1E1EE2CD00BAB239 /* ContactoViewController.swift */,
 				F0F7B5A31E1F47D500070016 /* BusquedaViewController.swift */,
+				F0F7B5A51E21149D00070016 /* CarritoViewController.swift */,
 			);
 			path = market;
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 				F0EB2D211DE2995D00C46463 /* Customer.swift in Sources */,
 				F08117961E0B29A5008A7EC5 /* FeatureViewCell.swift in Sources */,
 				F0065EAE1E0210E700658DD4 /* Descuento.swift in Sources */,
+				F0F7B5A61E21149D00070016 /* CarritoViewController.swift in Sources */,
 				F00F8C091DF7D72F00EDC7A5 /* Order.swift in Sources */,
 				F00F8C0B1DF7D7D800EDC7A5 /* OrderItem.swift in Sources */,
 				F0E41C101DE3F4A0000CCD4A /* MenuViewCell.swift in Sources */,
