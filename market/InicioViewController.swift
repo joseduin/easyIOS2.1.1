@@ -29,10 +29,6 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
         navigationController?.navigationBar.barTintColor = UIColor(red:255/255.0, green: 98/255.0, blue: 18/255.0, alpha: 1)
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
-        // no se para que estos e.e
-        //tabBarController?.tabBar.barTintColor = UIColor.brown
-        //tabBarController?.tabBar.tintColor = UIColor.yellow
-        
         shadowView.isHidden = true
         menuView.isHidden = true
         estiloSliderMenu()

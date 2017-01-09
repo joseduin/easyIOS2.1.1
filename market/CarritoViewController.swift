@@ -11,113 +11,277 @@ import UIKit
 import Alamofire
 import Haneke
 
-class CarritoViewController: UIViewController {
+class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    // al final obtener carrito con las cantidades?
+    
+    @IBOutlet weak var contenedorResumen: UIView!
+    @IBOutlet weak var contenedorProductosScroll: UIScrollView!
+    @IBOutlet weak var contenedorDirecciones: UIView!
+    @IBOutlet weak var contenedorTransporteScroll: UIScrollView!
+    @IBOutlet weak var contenedorPago: UIView!
+    
+    // Resumen
+    @IBOutlet weak var metodoPago: UILabel!
+    @IBOutlet weak var importe: UILabel!
+    @IBOutlet weak var aceptamosMonedaDolar: UILabel!
+    @IBOutlet weak var imformacion: UILabel!
+    
+    @IBAction func confirmarPedido(_ sender: UIButton) {
+    }
+    
+    // Productos
+    @IBOutlet weak var tableProductos: UITableView!
+    @IBOutlet weak var totalProducto: UILabel!
+    @IBOutlet weak var totalEnvio: UILabel!
+    @IBOutlet weak var total: UILabel!
+    
+    @IBAction func Siguiente1(_ sender: UIButton) {
+    }
+    
+    // direcciones
+    @IBOutlet weak var pickerDir1: UIPickerView!
+    @IBOutlet weak var checkDirecciones: checkBox!
+    @IBOutlet weak var pickerDir2: UIPickerView!
+    
+    @IBOutlet weak var direccionesNavBar: UIBarButtonItem!
+    var isCheckDirecciones = false
+    
+    @IBAction func Siguiente2(_ sender: UIButton) {
+    }
+    @IBAction func checkDirecciones(_ sender: checkBox) {
+        isCheckDirecciones = !isCheckDirecciones
+        if (isCheckDirecciones) {
+            pickerDir2.isHidden = false
+        } else {
+            pickerDir2.isHidden = true
+        }
+    }
+    
+    // transportes
+    @IBOutlet weak var tableTransporte: UITableView!
+    @IBOutlet weak var checkTerminoServicio: checkBox!
+    var isChekectTerminos = false
+    
+    @IBAction func TerminosServicio(_ sender: UIButton) {
+        
+    }
+    @IBAction func Siguiente3(_ sender: UIButton) {
+    }
+    
+    // Pago
+    @IBAction func pagoTransferencia(_ sender: UIButton) {
+    }
+    @IBAction func pagoEfectivo(_ sender: UIButton) {
+    }
+    
     
     let facade: Facade = Facade()
-    var envio_id: Array<String> = []
+    
+    var envio_id: [String] = [String]()
     var primerEnvio: Carrier = Carrier()
     var USUARIO_ID: String = ""
     var MODULE: String = ""
     var PAYMENT: String = ""
     var CARRITO_ACTUAL: Carrito = Carrito()
-    var productos: Array<Producto> = Array<Producto>()
-    var ids: Array<String> = Array<String>()
-    var direcciones: Array<Direccion> = Array<Direccion>()
+    var productos: [Producto] = [Producto]()
+    var ids: [String] = [String]()
+    var direcciones: [Direccion] = [Direccion]()
+    var DIR_ACT: Int = 0
+    var DIR_FAC: Int = 0
+    var preciosNetos: [Double] = [Double]()
+    var precioTransporte: Double = 0.0
     
+    // Delivery
+    var EnvioActivo: Int = 0
+    // private int shipping_handling = 2;      // Buscar este valor e.e
+    
+    var columna: Int = 4
+    var imageWigth: Int = 0
+    var alias: [String] = [String]()
+    
+    // Pases
+    var carritoId: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.title = "Carrito - Paso 1 / 4"
+        
+        navigationController?.navigationBar.barTintColor = UIColor(red:255/255.0, green: 98/255.0, blue: 18/255.0, alpha: 1)
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
+        tableProductos.delegate = self
+        tableProductos.dataSource = self
+        tableProductos.separatorStyle = .none
+        tableProductos.backgroundColor = UIColor.clear
+        
+        tableTransporte.delegate = self
+        tableTransporte.dataSource = self
+        tableTransporte.separatorStyle = .none
+        tableTransporte.backgroundColor = UIColor.clear
+        
+        contenedorResumen.isHidden = true
+        contenedorProductosScroll.isHidden = true
+        contenedorDirecciones.isHidden = true
+        contenedorTransporteScroll.isHidden = true
+        contenedorPago.isHidden = true
+        
+        pickerDir1.dataSource = self
+        pickerDir1.delegate = self
+        
+        pickerDir2.dataSource = self
+        pickerDir2.delegate = self
+        
+        pickerDir1.tag = 1
+        pickerDir2.tag = 2
+        
+        USUARIO_ID = UserDefaults.standard.string(forKey: "email")!
+        
+        pickerDir1.isHidden = true
+        pickerDir2.isHidden = true
+        
+        if (carritoId == "no") {
+            contenedorProductosScroll.isHidden = true
+            mensaje(mensaje: "Su carrito está vacío.", cerrar: true)
+        } else {
+            buscarCarrito(existencia: carritoId)
+        }
+
+    }
+    
+    func numberOfComponentsInPickerView(pickerView : UIPickerView!) -> Int{
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        
+        if pickerView == pickerDir1 {
+            //return test[row]
+        } else if pickerView == pickerDir2 {
+            //return test2[row]
+        }
+        return ""
+    }
+    
+    func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int) {
+
+        if pickerView == pickerDir1 {
+            DIR_ACT = row
+        } else if pickerView == pickerDir2 {
+            DIR_FAC = row
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var count: Int
+        if tableView == tableProductos {
+            count = productos.count
+        } else if tableView == tableTransporte {
+            
+        }
+        return count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+      
+        if tableView == tableProductos {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CarritoProductoTableViewCell") as! CarritoProductoTableViewCell
+            
+            let producto = productos[indexPath.row]
+            let precioNeto = preciosNetos[indexPath.row]
+            cell.descripcion.text = producto.name
+            cell.precioUnitario.text = "$ \(String(format: "%.2f", precioNeto))"
+            cell.precioTotal.text = "$ \(String(format: "%.2f", precioNeto * Double(CARRITO_ACTUAL.carritoDetalles[indexPath.row].quantity)!))"
+            
+            buscarImagen(id: "\(producto.id)/\(producto.imagenes[0])", tipo: "products", imagenSize: "small_default", imagen: cell.imagen)
+            
+            buscarStock(producto.stock_availables[0], Int(CARRITO_ACTUAL.carritoDetalles[indexPath.row].quantity)!), cell.stepper, cell.valor.text)
+
+        } else if tableView == tableTransporte {
+            
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == tableProductos {
+            
+        } else if tableView == tableTransporte {
+            
+        }
     }
     
     //Linea 200
     
     func buscarCarrito(existencia: String) {
-        Alamofire.request("\(facade.WEB_PAGE)/carts/\(existencia)").validate().responseJSON { response in
+        Alamofire.request("\(facade.WEB_PAGE)/carts/\(existencia)?\(facade.parametrosKey())").validate().responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
-                    var carrito: Carrito = self.facade.buscarCarrito(res: JSON);
-                    self.validarQueCarritoNoSeaUnaOrden(carrito: carrito);
+                    let carrito: Carrito = self.facade.buscarCarrito(res: JSON)
+                    self.validarQueCarritoNoSeaUnaOrden(carrito: carrito)
                 }
             case .failure( _):
                 self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-                //  print(error)        // Poner en comentario
+                //print(error)        // Poner en comentario
             }
         }
     }
     
     
     func  validarQueCarritoNoSeaUnaOrden(carrito: Carrito) {
-        Alamofire.request("\(facade.WEB_PAGE)/orders?filter[id_cart]=\(carrito.id)").validate().responseJSON { response in
+        Alamofire.request("\(facade.WEB_PAGE)/orders?filter[id_cart]=\(carrito.id)&\(facade.parametrosKey())").validate().responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
-                    var validar: String = self.facade.validarQueCarritoNoSeaUnaOrden(res: JSON);
+                    let validar: String = self.facade.validarQueCarritoNoSeaUnaOrden(res: JSON)
                     if (validar == "no") { // El carrito actual no es una orden
-                        self.examinarCarrito(carrito: carrito);
+                        self.examinarCarrito(carrito: carrito)
                     } else {
-                        //contenedorCarrito.setVisibility(View.GONE);
-                        //existeCarrito.setVisibility(View.VISIBLE);
-                        //existeCarrito.setText("Su carrito está vacío.");
+                         self.mensaje(mensaje: "Su carrito está vacío.", cerrar: true)
                     }
                 }
             case .failure( _):
                 self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-                //  print(error)        // Poner en comentario
+                //print(error)        // Poner en comentario
             }
         }
     }
     
     
     func examinarCarrito(carrito: Carrito) {
-        if (carrito.carritoDetalles == nil) {
-            //contenedorCarrito.setVisibility(View.GONE);
-            //existeCarrito.setVisibility(View.VISIBLE);
-            //existeCarrito.setText("Su carrito está vacío.");
-            return;
+        if (carrito.carritoDetalles.isEmpty) {
+            mensaje(mensaje: "Su carrito está vacío.", cerrar: true)
+            return
         }
-        //************************************** ME COMIO *****************
         
-        CARRITO_ACTUAL = carrito;
+        CARRITO_ACTUAL = carrito
         //contenedorTotalPrecios.setVisibility(View.VISIBLE);
-        var prod: Array<String> = Array<String>();
-        /*for (_, subJson):(detalle: CarritoDetalle,: carrito.carritoDetalles) in CARRITO_ACTUAL {
-         prod.add(detalle.getId_product());
-         }
-         *******************************************************************/
-        
-        self.buscarProductos(hijo: 0, prod: prod, carrito: carrito);
-    }
-    
-    
-    func buscarProductos(hijo: Int, prod: Array<String>, carrito: Carrito) {
-        Alamofire.request("\(facade.WEB_PAGE)/products/\(prod[hijo])?").validate().responseJSON { response in
-            switch response.result {
-            case .success:
-                if let JSON = response.result.value {
-                    var producto: Producto = self.facade.buscarProducto(res: JSON);
-                    //  self.buscarImagene(producto, "\(producto.id)/\(producto.imagenes[0])", prod, hijo, carrito);
-                }
-            case .failure( _):
-                self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-                //  print(error)        // Poner en comentario
-            }
+        var prod: [String] = [String]()
+        for index in 0..<carrito.carritoDetalles.count {
+            let detalle: CarritoDetalle = carrito.carritoDetalles[index]
+            prod.append(detalle.id_product)
         }
-        
+ 
+        buscarProductos(hijo: 0, prod: prod, carrito: carrito)
     }
     
-    func buscarImagene(producto: Producto, imagen: String, imagenes: Array<String>, hijo: Int, carrito: Carrito) {
-        Alamofire.request("\(facade.WEB_PAGE)/images/products/\(imagen)/small_default?").validate().responseJSON { response in
+    
+    func buscarProductos(hijo: Int, prod: [String], carrito: Carrito) {
+        Alamofire.request("\(facade.WEB_PAGE)/products/\(prod[hijo])?\(facade.parametrosKey())").validate().responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
-                    //  producto.id_default_image(self.facade.BitMapToString(BitmapFactory.decodeByteArray(bytes, 0, bytes.length)));
-                    
-                    //SET IMAGEN
-                    self.productos.append(producto);
-                    
-                    //buscarSiTieneDescuento(hijo, imagenes, carrito);
-                    self.seguirBuscandoProducto(hijo: hijo, productos: imagenes, carrito: carrito, precioNeto: Double(self.productos[hijo].price/*.replace(",", ".")*/)!);          }
+                    let producto: Producto = self.facade.buscarProducto(res: JSON)
+                    self.insertProducto(producto: producto, precio: Double(self.productos[hijo].price)!)
+                    //buscarSiTieneDescuento(hijo, imagenes, carrito)
+                    self.seguirBuscandoProducto(hijo: hijo, carrito: carrito, producto: prod)
+                }
             case .failure( _):
                 self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
                 //  print(error)        // Poner en comentario
@@ -132,70 +296,33 @@ class CarritoViewController: UIViewController {
         imagen.hnk_setImage(from: url!)
     }
     
-    func seguirBuscandoProducto(hijo: Int, productos: Array<String>, carrito: Carrito, precioNeto: Double) {
-        self.imprimirProductos(carrito: carrito, position: hijo, precioNeto: precioNeto);
-        var hij: Int = hijo;
-        hij += 1
+    func insertProducto(producto: Producto, precio: Double) {
+        preciosNetos.append(precio)
+        productos.append(producto)
+        tableProductos.reloadData()
+    }
+    
+    func seguirBuscandoProducto(hijo: Int, carrito: Carrito, producto: [String]) {
+        
+        let hij: Int = hijo + 1
         if (hij < productos.count) {     // ¿Hay mas productos?
-            self.buscarProductos(hijo: hij, prod: productos, carrito: carrito);
+            self.buscarProductos(hijo: hij, prod: producto, carrito: carrito);
         } else {
             self.buscarEnvios(hijo: 0, imprimir: false);
         }
     }
     
-    
-    
-    
-    //Linea 413
     func calcularTotales() {
-        //var subtotal: Double = subtotal();
-        //txtSubTotaProducto.setText("$" + subtotal);
-        //var envioString: String = txtPrecioEnvio.getText().toString().replace("$", "");
-        //var envio: Double = Double(envioString.replace(",", "."));
-        //var total: Double = subtotal + envio;
-        //txtTOTAL.setText("$" + total);
+        let subtot = subtotal()
+        totalProducto.text = "$ \(subtotal())"
+
+        let tot: Double = subtot + precioTransporte
+        total.text = "$ \(tot)"
     }
     
     func imprimirProductos(carrito: Carrito, position: Int, precioNeto: Double) {
-        /*  final ViewGroup newView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.carrito_item, recycleCarrito, false);
-         
-         TextView nombreProductoCarrito = (TextView) newView.findViewById(R.id.nombreProductoCarrito);
-         TextView precioProductoCarrito = (TextView) newView.findViewById(R.id.precioProductoCarrito);
-         final TextView precioTotalCarrito = (TextView) newView.findViewById(R.id.precioTotalCarrito);
-         
-         ImageView imageCarrito = (ImageView) newView.findViewById(R.id.imageCarrito);
-         
-         final NumberPicker numberPickerCarrito = (NumberPicker) newView.findViewById(R.id.numberPickerCarrito);
-         
-         Button ButtonMenosCantidadCarrito = (Button) newView.findViewById(R.id.ButtonMenosCantidadCarrito);
-         Button buttonMasCantidadCarrito = (Button) newView.findViewById(R.id.buttonMasCantidadCarrito);
-         
-         ImageButton btnEliminarProductocarrito = (ImageButton) newView.findViewById(R.id.btnEliminarProductocarrito);
-         
-         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(imageWigth, imageWigth);
-         imageCarrito.setLayoutParams(params);
-         
-         int width = (int) (imageWigth * 0.8);
-         nombreProductoCarrito.setWidth(imageWigth);
-         precioProductoCarrito.setWidth(imageWigth);
-         precioTotalCarrito.setWidth(imageWigth);
-         
-         numberPickerCarrito.setLayoutParams(new LinearLayout.LayoutParams(width, width / 2));
-         LinearLayout.LayoutParams para = new LinearLayout.LayoutParams(width / 2, width / 2);
-         buttonMasCantidadCarrito.setLayoutParams(para);
-         ButtonMenosCantidadCarrito.setLayoutParams(para);
-         
-         nombreProductoCarrito.setText(productos.get(position).getName());
-         
-         precioProductoCarrito.setText("$" + String.format("%.2f", precioNeto));
-         precioTotalCarrito.setText("$" + String.format("%.2f", precioNeto * Integer.valueOf(carrito.getCarritoDetalles().get(position).getQuantity())));
-         
-         
-         imageCarrito.setImageBitmap(conversor.StringToBitMap(productos.get(position).getId_default_image()));
-         numberPickerCarrito.setMinValue(1);
-         numberPickerCarrito.setWrapSelectorWheel(false);
-         buscarStock(productos.get(position).getStock_availables().get(0), Integer.valueOf(carrito.getCarritoDetalles().get(position).getQuantity()), numberPickerCarrito);
-         
+        /*
+    
          numberPickerCarrito.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
          @Override
          public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
@@ -225,51 +352,10 @@ class CarritoViewController: UIViewController {
          */
     }
     
-    func confirmarEliminarProductoCarrito(nombre: String) {
-        /*AlertDialog.Builder builder = new AlertDialog.Builder(this);
-         
-         builder.setTitle("Confirmación");
-         builder.setMessage("¿Seguro de sacar del carrito \"" + nombre + "\" ?");
-         
-         builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
-         public void onClick(DialogInterface dialog, int which) {
-         // Do something
-         dialog.dismiss();
-         }
-         });
-         
-         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-         @Override
-         public void onClick(DialogInterface dialog, int which) {
-         
-         dialog.dismiss();
-         }
-         });
-         
-         AlertDialog alert = builder.create();
-         alert.show();
-         */}
+    
     
     
     //***************************PICKERS**************************
-    
-    
-    func actualizarCantidadDeProductosEnCarrito(cantidad: Int, position: Int, carrito: Carrito/*, final TextView precioTotalCarrito,*/, precio: String) {
-        
-        Alamofire.request("\(facade.WEB_API_AUX)/UCartItemQuantity.php?id=\(carrito.id)&row=\(position)&qua=\(cantidad)").validate().responseJSON { response in
-            switch response.result {
-            case .success:
-                if let JSON = response.result.value {
-                    //precioTotalCarrito.setText("$" + String.format("%.2f", (Double.valueOf(precio.replace(",", ".")) * cantidad)));
-                    self.calcularTotales();
-                }
-            case .failure( _):
-                self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-                //  print(error)        // Poner en comentario
-            }
-        }
-        
-    }
     
     func buscarStock(stock: String, cant: Int/* final NumberPicker numberPickerCarrito*/) {
         Alamofire.request("\(facade.WEB_PAGE)/stock_availables/\(stock)?").validate().responseJSON { response in
@@ -295,12 +381,12 @@ class CarritoViewController: UIViewController {
     
     func subtotal() -> Double {
         var acum: Double = 0.0;
-        /*for (int i = 0; i < recycleCarrito.getChildCount(); i++) {
-         View hijo = recycleCarrito.getChildAt(i);
-         TextView precioTotalCarrito = (TextView) hijo.findViewById(R.id.precioTotalCarrito);
-         String precio = precioTotalCarrito.getText().toString().replace("$", "");
-         acum += Double.valueOf(precio.trim().replace(",", "."));
-         }*/
+        for index in 0..<productos.count {
+            let pro: Producto = productos[index]
+            let precioNeto = preciosNetos[index]
+            
+            acum = precioNeto * Double(CARRITO_ACTUAL.carritoDetalles[index].quantity)
+        }
         return acum;
     }
     
@@ -874,6 +960,10 @@ class CarritoViewController: UIViewController {
     }
     
     //Linea 1183
+    @IBAction func btnAtras(_ sender: UIBarButtonItem) {
+    }
+    @IBAction func btnDirecciones(_ sender: UIBarButtonItem) {
+    }
     
     func mensaje(mensaje: String, cerrar: Bool) {
         let mostrarMensaje = UIAlertController(title: "Mensaje", message: mensaje, preferredStyle: UIAlertControllerStyle.alert)

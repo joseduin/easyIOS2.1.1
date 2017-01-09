@@ -42,6 +42,12 @@
 		F094168A1DDFAF1C00626583 /* RegistroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09416891DDFAF1C00626583 /* RegistroViewController.swift */; };
 		F094168C1DDFBE6F00626583 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F094168B1DDFBE6F00626583 /* LoginViewController.swift */; };
 		F094168F1DDFC18C00626583 /* Facade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F094168E1DDFC18C00626583 /* Facade.swift */; };
+		F0B28F3E1E23EF7C00BD863E /* efectivo.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B28F3D1E23EF7C00BD863E /* efectivo.png */; };
+		F0B28F401E23EFAB00BD863E /* transferencia.png in Resources */ = {isa = PBXBuildFile; fileRef = F0B28F3F1E23EFAB00BD863E /* transferencia.png */; };
+		F0B28F441E240E9200BD863E /* checkBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B28F431E240E9200BD863E /* checkBox.swift */; };
+		F0BF69211E23665300696FDB /* PagoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF69201E23665300696FDB /* PagoViewController.swift */; };
+		F0BF69231E2366D000696FDB /* CarritoProductoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF69221E2366D000696FDB /* CarritoProductoTableViewCell.swift */; };
+		F0BF69251E2366FE00696FDB /* CarritoTransporteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BF69241E2366FE00696FDB /* CarritoTransporteTableViewCell.swift */; };
 		F0DAB4F81DF67D9D007A3A37 /* carrito_inicio.png in Resources */ = {isa = PBXBuildFile; fileRef = F0DAB4F41DF67D9C007A3A37 /* carrito_inicio.png */; };
 		F0DAB4F91DF67D9D007A3A37 /* direcciones_inicio.png in Resources */ = {isa = PBXBuildFile; fileRef = F0DAB4F51DF67D9C007A3A37 /* direcciones_inicio.png */; };
 		F0DAB4FA1DF67D9D007A3A37 /* mis_pedidos_inicio.png in Resources */ = {isa = PBXBuildFile; fileRef = F0DAB4F61DF67D9C007A3A37 /* mis_pedidos_inicio.png */; };
@@ -56,6 +62,7 @@
 		F0ECD13C1E1EE2CD00BAB239 /* ContactoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0ECD13B1E1EE2CD00BAB239 /* ContactoViewController.swift */; };
 		F0F7B5A41E1F47D500070016 /* BusquedaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F7B5A31E1F47D500070016 /* BusquedaViewController.swift */; };
 		F0F7B5A61E21149D00070016 /* CarritoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F7B5A51E21149D00070016 /* CarritoViewController.swift */; };
+		F0F7B5AA1E211CD900070016 /* sad_search-2.png in Resources */ = {isa = PBXBuildFile; fileRef = F0F7B5A91E211CD900070016 /* sad_search-2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -122,6 +129,12 @@
 		F09416891DDFAF1C00626583 /* RegistroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistroViewController.swift; sourceTree = "<group>"; };
 		F094168B1DDFBE6F00626583 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F094168E1DDFC18C00626583 /* Facade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Facade.swift; sourceTree = "<group>"; };
+		F0B28F3D1E23EF7C00BD863E /* efectivo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = efectivo.png; sourceTree = "<group>"; };
+		F0B28F3F1E23EFAB00BD863E /* transferencia.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transferencia.png; sourceTree = "<group>"; };
+		F0B28F431E240E9200BD863E /* checkBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = checkBox.swift; sourceTree = "<group>"; };
+		F0BF69201E23665300696FDB /* PagoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagoViewController.swift; sourceTree = "<group>"; };
+		F0BF69221E2366D000696FDB /* CarritoProductoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarritoProductoTableViewCell.swift; sourceTree = "<group>"; };
+		F0BF69241E2366FE00696FDB /* CarritoTransporteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarritoTransporteTableViewCell.swift; sourceTree = "<group>"; };
 		F0DAB4F41DF67D9C007A3A37 /* carrito_inicio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = carrito_inicio.png; path = ../../../Downloads/easycasicompleto/carrito_inicio.png; sourceTree = "<group>"; };
 		F0DAB4F51DF67D9C007A3A37 /* direcciones_inicio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = direcciones_inicio.png; path = ../../../Downloads/easycasicompleto/direcciones_inicio.png; sourceTree = "<group>"; };
 		F0DAB4F61DF67D9C007A3A37 /* mis_pedidos_inicio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mis_pedidos_inicio.png; path = ../../../Downloads/easycasicompleto/mis_pedidos_inicio.png; sourceTree = "<group>"; };
@@ -135,6 +148,7 @@
 		F0ECD13B1E1EE2CD00BAB239 /* ContactoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactoViewController.swift; sourceTree = "<group>"; };
 		F0F7B5A31E1F47D500070016 /* BusquedaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusquedaViewController.swift; sourceTree = "<group>"; };
 		F0F7B5A51E21149D00070016 /* CarritoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarritoViewController.swift; sourceTree = "<group>"; };
+		F0F7B5A91E211CD900070016 /* sad_search-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sad_search-2.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +213,7 @@
 				F09416831DDFA20800626583 /* Info.plist */,
 				F08117911E0B11F4008A7EC5 /* ProductoDetalleViewController.swift */,
 				F00CB1A31E12A59700E51359 /* ProductoDetalleModalController.swift */,
+				F0BF69241E2366FE00696FDB /* CarritoTransporteTableViewCell.swift */,
 				F08117931E0B297C008A7EC5 /* GaleriaViewCell.swift */,
 				F08117951E0B29A5008A7EC5 /* FeatureViewCell.swift */,
 				F0065EB31E021D0600658DD4 /* CategoriasXMLViewController.swift */,
@@ -218,6 +233,8 @@
 				F0ECD13B1E1EE2CD00BAB239 /* ContactoViewController.swift */,
 				F0F7B5A31E1F47D500070016 /* BusquedaViewController.swift */,
 				F0F7B5A51E21149D00070016 /* CarritoViewController.swift */,
+				F0BF69201E23665300696FDB /* PagoViewController.swift */,
+				F0BF69221E2366D000696FDB /* CarritoProductoTableViewCell.swift */,
 			);
 			path = market;
 			sourceTree = "<group>";
@@ -245,9 +262,12 @@
 			isa = PBXGroup;
 			children = (
 				F0ECD1391E1EE00B00BAB239 /* como_comprar.png */,
+				F0B28F3D1E23EF7C00BD863E /* efectivo.png */,
+				F0B28F3F1E23EFAB00BD863E /* transferencia.png */,
 				F05A7A3D1E02DB0E00455568 /* placeholder.png */,
 				F0DAB4F41DF67D9C007A3A37 /* carrito_inicio.png */,
 				F0DAB4F51DF67D9C007A3A37 /* direcciones_inicio.png */,
+				F0F7B5A91E211CD900070016 /* sad_search-2.png */,
 				F0DAB4F61DF67D9C007A3A37 /* mis_pedidos_inicio.png */,
 				F0DAB4F71DF67D9C007A3A37 /* perfil_inicio.png */,
 				F0EB2D231DE2BB5000C46463 /* logo.png */,
@@ -260,6 +280,7 @@
 			children = (
 				F0332FC11DF8B6A9003F64AB /* CardView.swift */,
 				F0065EAF1E0211F700658DD4 /* Pruebas.swift */,
+				F0B28F431E240E9200BD863E /* checkBox.swift */,
 			);
 			name = estructura;
 			sourceTree = "<group>";
@@ -331,11 +352,14 @@
 			files = (
 				F0DAB4FB1DF67D9D007A3A37 /* perfil_inicio.png in Resources */,
 				F0EB2D241DE2BB5000C46463 /* logo.png in Resources */,
+				F0B28F401E23EFAB00BD863E /* transferencia.png in Resources */,
 				F09416821DDFA20800626583 /* LaunchScreen.storyboard in Resources */,
+				F0F7B5AA1E211CD900070016 /* sad_search-2.png in Resources */,
 				F0DAB4F81DF67D9D007A3A37 /* carrito_inicio.png in Resources */,
 				F05A7A3E1E02DB0E00455568 /* placeholder.png in Resources */,
 				F0E41C0D1DE3D8C6000CCD4A /* Assets.xcassets in Resources */,
 				F0ECD13A1E1EE00B00BAB239 /* como_comprar.png in Resources */,
+				F0B28F3E1E23EF7C00BD863E /* efectivo.png in Resources */,
 				F094167D1DDFA20800626583 /* Main.storyboard in Resources */,
 				F0DAB4FA1DF67D9D007A3A37 /* mis_pedidos_inicio.png in Resources */,
 				F0DAB4F91DF67D9D007A3A37 /* direcciones_inicio.png in Resources */,
@@ -401,12 +425,15 @@
 				F08117941E0B297C008A7EC5 /* GaleriaViewCell.swift in Sources */,
 				F094168C1DDFBE6F00626583 /* LoginViewController.swift in Sources */,
 				F091735F1DF7881700048B10 /* InicioViewController.swift in Sources */,
+				F0B28F441E240E9200BD863E /* checkBox.swift in Sources */,
 				F05A932E1E140870001AD29D /* Carrier.swift in Sources */,
 				F00CB1A41E12A59700E51359 /* ProductoDetalleModalController.swift in Sources */,
 				F081179A1E0B3F84008A7EC5 /* CarritoDetalle.swift in Sources */,
+				F0BF69251E2366FE00696FDB /* CarritoTransporteTableViewCell.swift in Sources */,
 				F03B6A191E05E93B00B84BBE /* CategoriaViewCell.swift in Sources */,
 				F05A932A1E140807001AD29D /* DireccionRealViewController.swift in Sources */,
 				F094168F1DDFC18C00626583 /* Facade.swift in Sources */,
+				F0BF69211E23665300696FDB /* PagoViewController.swift in Sources */,
 				F0EB2D211DE2995D00C46463 /* Customer.swift in Sources */,
 				F08117961E0B29A5008A7EC5 /* FeatureViewCell.swift in Sources */,
 				F0065EAE1E0210E700658DD4 /* Descuento.swift in Sources */,
@@ -432,6 +459,7 @@
 				F05A932C1E140844001AD29D /* Direccion.swift in Sources */,
 				F0DAB4FD1DF68565007A3A37 /* DatosViewController.swift in Sources */,
 				F08117981E0B3F3C008A7EC5 /* Carrito.swift in Sources */,
+				F0BF69231E2366D000696FDB /* CarritoProductoTableViewCell.swift in Sources */,
 				F09416781DDFA20800626583 /* AppDelegate.swift in Sources */,
 				F0332FC41DF8C164003F64AB /* DireccionViewController.swift in Sources */,
 				F08117921E0B11F4008A7EC5 /* ProductoDetalleViewController.swift in Sources */,
