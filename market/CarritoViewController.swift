@@ -322,6 +322,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         CARRITO_ACTUAL = carrito
         //contenedorTotalPrecios.setVisibility(View.VISIBLE);
         var prod: [String] = [String]()
+        print(carrito.carritoDetalles.count)
         for index in 0..<carrito.carritoDetalles.count {
             let detalle: CarritoDetalle = carrito.carritoDetalles[index]
             prod.append(detalle.id_product)
@@ -365,7 +366,8 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     func seguirBuscandoProducto(hijo: Int, carrito: Carrito, producto: [String]) {
         
         let hij: Int = hijo + 1
-        if (hij < productos.count) {     // ¿Hay mas productos?
+        print("\(hij) < \(CARRITO_ACTUAL.carritoDetalles.count)")
+        if (hij < CARRITO_ACTUAL.carritoDetalles.count) {     // ¿Hay mas productos?
             self.buscarProductos(hijo: hij, prod: producto, carrito: carrito);
         } else {
             self.buscarEnvios(hijo: 0, imprimir: false);
@@ -386,7 +388,8 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
-                    let cantidad: String = self.facade.buscarStock(res: JSON);
+                    let cantidad: String = self.facade.buscarStock(res: JSON)
+                    print(cantidad)
                     if (cantidad != "Este producto ya no está disponible") {
                         stepper.maximumValue = Double(cantidad)!
                     } else {
@@ -495,13 +498,15 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarPrecioId(envio: Carrier, hijo: Int, imprimir: Bool) {
-        print("\(facade.WEB_PAGE)/deliveries?filter[id_carrier]=\(envio.id)&filter[id_zone]=6?\(facade.parametrosBasicos())")
-        Alamofire.request("\(facade.WEB_PAGE)/deliveries?filter[id_carrier]=\(envio.id)&filter[id_zone]=6?\(facade.parametrosBasicos())").validate().responseJSON { response in
+        print("\(facade.WEB_PAGE)/deliveries?filter[id_carrier]=\(envio.id)&filter[id_zone]=6&\(facade.parametrosBasicos())")
+        Alamofire.request("\(facade.WEB_PAGE)/deliveries?filter[id_carrier]=\(envio.id)&filter[id_zone]=6&\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
                     var id_delivery: [String] = self.facade.buscarDeliveries(res: JSON)
+                    print("id delivery -> \(id_delivery)")
                     self.buscarPrecio(s: id_delivery[0], hijo: hijo, envio: envio, imprimir: imprimir)
+                    print("epa")
                 }
             case .failure( _):
                 self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
