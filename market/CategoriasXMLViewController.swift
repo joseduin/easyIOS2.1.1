@@ -198,9 +198,7 @@ class CategoriasXMLViewController: UIViewController, UITableViewDelegate, UITabl
     
     func insertProducto(producto: Producto) {
         producto_lista.append(producto)
-        //let indexPath = IndexPath(row: 0, section: 0)
         contenedorProductos.reloadData()
-        //insertRows(at: [indexPath], with: .automatic)
     }
     
     // Producutos

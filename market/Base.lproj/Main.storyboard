@@ -3313,10 +3313,13 @@ RGlyZWNjaRvDs24
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9HQ-gU-uEh">
+                                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9HQ-gU-uEh" customClass="checkBox" customModule="market" customModuleProvider="target">
                                                                             <rect key="frame" x="8" y="27" width="25" height="24"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <state key="normal" title="Button" image="ic_check_box"/>
+                                                                            <connections>
+                                                                                <action selector="checkSelected:" destination="fhM-wR-DGF" eventType="touchUpInside" id="BJ6-fN-1p5"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3324,7 +3327,7 @@ RGlyZWNjaRvDs24
                                                             </subviews>
                                                         </tableViewCellContentView>
                                                         <connections>
-                                                            <outlet property="check" destination="9HQ-gU-uEh" id="JGu-Ua-Tae"/>
+                                                            <outlet property="check" destination="9HQ-gU-uEh" id="On0-A0-frq"/>
                                                             <outlet property="descripcion" destination="Hiw-qT-Ra4" id="86i-u6-tTP"/>
                                                             <outlet property="duracion" destination="heG-Tg-AMo" id="AhX-FC-gC9"/>
                                                             <outlet property="tiempo" destination="lbF-g9-Tm3" id="YBA-3y-TCC"/>
@@ -3394,6 +3397,14 @@ RGlyZWNjaRvDs24
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uin-Ta-tBi">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="wCX-HD-nOW" id="bqV-xA-QL9"/>
+                                            <outlet property="delegate" destination="wCX-HD-nOW" id="s4b-Y8-1X5"/>
+                                        </connections>
+                                    </pickerView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NOg-E8-v7e" customClass="checkBox" customModule="market" customModuleProvider="target">
                                         <rect key="frame" x="26" y="152" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3413,10 +3424,6 @@ RGlyZWNjaRvDs24
                                             <action selector="Siguiente2:" destination="wCX-HD-nOW" eventType="touchUpInside" id="UJM-kz-TGJ"/>
                                         </connections>
                                     </button>
-                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-gJ-NWI">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="100"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    </pickerView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Usar la misma dirección para la facturación" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j23-Wp-nh9">
                                         <rect key="frame" x="59" y="152" width="287" height="46"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3424,9 +3431,13 @@ RGlyZWNjaRvDs24
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uin-Ta-tBi">
-                                        <rect key="frame" x="0.0" y="215" width="375" height="100"/>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-gJ-NWI">
+                                        <rect key="frame" x="0.0" y="218" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="wCX-HD-nOW" id="tY0-Yl-sPB"/>
+                                            <outlet property="delegate" destination="wCX-HD-nOW" id="hk8-Id-qMM"/>
+                                        </connections>
                                     </pickerView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

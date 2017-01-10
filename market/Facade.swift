@@ -454,6 +454,13 @@ class Facade {
         
     }
     
+    func buscarTerminos(res: Any) -> String {
+        let json = JSON(res)
+        let element = json["content"]
+    
+    return buscarJson(json: element, element: "content")
+    }
+    
     // Carrito
     
     func existeCarrito(res: Any) -> String {

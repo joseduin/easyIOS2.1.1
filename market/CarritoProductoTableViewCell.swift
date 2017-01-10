@@ -17,33 +17,38 @@ class CarritoProductoTableViewCell: UITableViewCell {
     @IBOutlet weak var valor: UILabel!
     @IBOutlet weak var stepper: UIStepper!
     @IBOutlet weak var precioTotal: UILabel!
+    
+    var controller: CarritoViewController?
+    var position: Int = 0
+    var carrito: Carrito = Carrito()
+    let facade: Facade = Facade()
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+
     }
 
     @IBAction func selectedStepper(_ sender: UIStepper) {
+        valor.text = Int(sender.value).description
+        actualizarCantidadDeProductosEnCarrito(cantidad: Double(sender.value))
     }
     
-    func actualizarCantidadDeProductosEnCarrito(cantidad: Int, position: Int, carrito: Carrito/*, final TextView precioTotalCarrito,*/, precio: String) {
+    func actualizarCantidadDeProductosEnCarrito(cantidad: Double) {
         
         Alamofire.request("\(facade.WEB_API_AUX)/UCartItemQuantity.php?id=\(carrito.id)&row=\(position)&qua=\(cantidad)").validate().responseJSON { response in
             switch response.result {
             case .success:
-                if let JSON = response.result.value {
-                    //precioTotalCarrito.setText("$" + String.format("%.2f", (Double.valueOf(precio.replace(",", ".")) * cantidad)));
-                    self.calcularTotales();
-                }
-            case .failure( _):
-                self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-                //  print(error)        // Poner en comentario
+                let precioString = self.precioUnitario.text?.replacingOccurrences(of: "$", with: "")
+                self.precioTotal.text = "$" + String(format: "%.2f", (Double(precioString!)! * cantidad))
+                self.controller?.calcularTotales()
+            default: break
+                
             }
         }
         

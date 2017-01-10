@@ -196,10 +196,10 @@ class BusquedaViewController: UIViewController, UITableViewDelegate, UITableView
         buscar()
     }
     @IBAction func irAFiltro(_ sender: Any) {
-        if (contenedorFiltros.isHidden == true) {
+        //if (contenedorFiltros.isHidden) {
             contenedorBusqueda.isHidden = true
             contenedorFiltros.isHidden = false
-        }
+        //}
     }
     
     func mensaje(mensaje: String, cerrar: Bool) {

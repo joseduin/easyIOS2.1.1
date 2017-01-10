@@ -13,7 +13,10 @@ class CarritoTransporteTableViewCell: UITableViewCell {
     @IBOutlet weak var descripcion: UILabel!
     @IBOutlet weak var duracion: UILabel!
     @IBOutlet weak var tiempo: UILabel!
-    @IBOutlet weak var check: UIButton!
+    @IBOutlet weak var check: checkBox!
+    
+    var controller: CarritoViewController?
+    var row: Int = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,8 +29,10 @@ class CarritoTransporteTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    @IBAction func checkSelected(_ sender: UIButton) {
-        
+    @IBAction func checkSelected(_ sender: Any) {
+        if (check.isChecked) {
+            controller?.check(envio: (controller!.listaEnvios[row]), hijo: row)
+        }
     }
    
 }
