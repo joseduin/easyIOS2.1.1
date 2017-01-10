@@ -132,7 +132,6 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var columna: Int = 4
     var imageWigth: Int = 0
-    var alias: [String] = [String]()
     
     // Pases
     var carritoId: String = ""
@@ -277,6 +276,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarCarrito(existencia: String) {
+        print("\(facade.WEB_PAGE)/carts/\(existencia)?\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/carts/\(existencia)?\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
@@ -293,6 +293,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     func  validarQueCarritoNoSeaUnaOrden(carrito: Carrito) {
+        print("\(facade.WEB_PAGE)/orders?filter[id_cart]=\(carrito.id)&\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/orders?filter[id_cart]=\(carrito.id)&\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
@@ -331,12 +332,13 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     func buscarProductos(hijo: Int, prod: [String], carrito: Carrito) {
+        print("\(facade.WEB_PAGE)/products/\(prod[hijo])?\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/products/\(prod[hijo])?\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
                     let producto: Producto = self.facade.buscarProducto(res: JSON)
-                    self.insertProducto(producto: producto, precio: Double(self.productos[hijo].price)!)
+                    self.insertProducto(producto: producto, precio: Double(producto.price)!)
                     //buscarSiTieneDescuento(hijo, imagenes, carrito)
                     self.seguirBuscandoProducto(hijo: hijo, carrito: carrito, producto: prod)
                 }
@@ -379,6 +381,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarStock(stock: String, cant: Int, stepper: UIStepper, valor: UILabel) {
+        print("\(facade.WEB_PAGE)/stock_availables/\(stock)?\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/stock_availables/\(stock)?\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
@@ -412,6 +415,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarDirecciones() {
+        print("\(facade.WEB_PAGE)/addresses?filter[id_customer]=\(USUARIO_ID)&\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/addresses?filter[id_customer]=\(USUARIO_ID)&\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
@@ -427,6 +431,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarDireccion(hijo: Int) {
+        print("\(facade.WEB_PAGE)/addresses/\(ids[hijo])?\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/addresses/\(ids[hijo])?\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
@@ -454,7 +459,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarEnvios(hijo: Int, imprimir: Bool) {
-        
+        print("\(facade.WEB_PAGE)/carriers?filter[deleted]=0&filter[active]=1&filter[is_free]=0&\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/carriers?filter[deleted]=0&filter[active]=1&filter[is_free]=0&\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
@@ -475,6 +480,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarEnvio(hijo: Int, imprimir: Bool) {
+        print("\(facade.WEB_PAGE)/carriers/\(self.envio_id[hijo])?\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/carriers/\(self.envio_id[hijo])?\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
@@ -489,6 +495,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarPrecioId(envio: Carrier, hijo: Int, imprimir: Bool) {
+        print("\(facade.WEB_PAGE)/deliveries?filter[id_carrier]=\(envio.id)&filter[id_zone]=6?\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/deliveries?filter[id_carrier]=\(envio.id)&filter[id_zone]=6?\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
@@ -507,6 +514,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     func buscarPrecio(s: String, hijo: Int, envio: Carrier, imprimir: Bool) {
+        print("\(facade.WEB_PAGE)/deliveries/\(s)?\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/deliveries/\(s)?\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
@@ -572,6 +580,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     func buscarTerminosDeEnvio() {
+        print("\(facade.WEB_PAGE)/content_management_system/3?\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/content_management_system/3?\(facade.parametrosBasicos())").validate().responseJSON { response in
             
             switch response.result {
@@ -664,6 +673,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     func buscarOrderRealizada() {
+        print("\(facade.WEB_PAGE)/orders?filter[id_customer]=\(USUARIO_ID)&sort=[id_DESC]&\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/orders?filter[id_customer]=\(USUARIO_ID)&sort=[id_DESC]&\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
@@ -678,6 +688,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarOrden(id: String) {
+        print("\(facade.WEB_PAGE)/orders/\(id)?\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/orders/\(id)?\(facade.parametrosBasicos())").validate().responseJSON { response in
             
             switch response.result {

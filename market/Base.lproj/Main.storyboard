@@ -958,11 +958,11 @@ RGlyZWNjaRvDs24
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xgE-Cm-7jn" customClass="CardView" customModule="market" customModuleProvider="target">
-                                                    <rect key="frame" x="2" y="3" width="358" height="141"/>
+                                                    <rect key="frame" x="2" y="3" width="357" height="141"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="02/12/2016" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piK-1v-d3D">
-                                                            <rect key="frame" x="3" y="0.0" width="342" height="21"/>
+                                                            <rect key="frame" x="3" y="0.0" width="341" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -976,42 +976,42 @@ RGlyZWNjaRvDs24
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="UXKALEMAMSLAS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SgO-jc-bP0">
-                                                            <rect key="frame" x="110" y="21" width="235" height="21"/>
+                                                            <rect key="frame" x="109" y="21" width="235" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V35-kI-Q6b">
-                                                            <rect key="frame" x="3" y="45" width="98" height="21"/>
+                                                            <rect key="frame" x="3" y="45" width="97" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$19.05" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lue-gf-X7w">
-                                                            <rect key="frame" x="110" y="45" width="235" height="21"/>
+                                                            <rect key="frame" x="109" y="45" width="235" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pago:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAE-aB-tSO">
-                                                            <rect key="frame" x="3" y="74" width="98" height="21"/>
+                                                            <rect key="frame" x="3" y="74" width="97" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Transferencia bancaria" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwi-uf-DEq">
-                                                            <rect key="frame" x="110" y="74" width="172" height="21"/>
+                                                            <rect key="frame" x="109" y="74" width="172" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <webView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hCp-vz-BLK">
-                                                            <rect key="frame" x="3" y="103" width="342" height="38"/>
+                                                            <rect key="frame" x="3" y="103" width="341" height="38"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </webView>
@@ -1810,6 +1810,7 @@ RGlyZWNjaRvDs24
                         <outlet property="nombre" destination="WC7-3k-C02" id="T2o-c6-Syg"/>
                         <outlet property="popover" destination="1WO-6v-gg9" id="hLj-tz-3lx"/>
                         <outlet property="total" destination="M6w-Rx-XUb" id="4Ai-6u-WTM"/>
+                        <segue destination="slC-XW-a1v" kind="show" identifier="CarritoViewController2" id="iT3-Pg-t5H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oc0-pW-8pS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1896,7 +1897,7 @@ RGlyZWNjaRvDs24
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ei8-tu-9hy">
-                                                                    <rect key="frame" x="75" y="11" width="209" height="21"/>
+                                                                    <rect key="frame" x="74" y="11" width="210" height="21"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
@@ -3011,11 +3012,11 @@ RGlyZWNjaRvDs24
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="81" id="C1q-sY-rcZ" customClass="CarritoProductoTableViewCell" customModule="market" customModuleProvider="target">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CarritoProductoTableViewCell" rowHeight="81" id="C1q-sY-rcZ" customClass="CarritoProductoTableViewCell" customModule="market" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="28" width="359" height="81"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C1q-sY-rcZ" id="nE9-ym-2Gp">
-                                                            <rect key="frame" x="0.0" y="0.0" width="359" height="80"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="359" height="81"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7S0-cd-uU4">
@@ -3281,11 +3282,11 @@ RGlyZWNjaRvDs24
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="101" id="fhM-wR-DGF" customClass="CarritoTransporteTableViewCell" customModule="market" customModuleProvider="target">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CarritoTransporteTableViewCell" rowHeight="101" id="fhM-wR-DGF" customClass="CarritoTransporteTableViewCell" customModule="market" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="28" width="341" height="101"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fhM-wR-DGF" id="GXO-pv-M0v">
-                                                            <rect key="frame" x="0.0" y="0.0" width="341" height="100"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="341" height="101"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2jO-vp-nEo" customClass="CardView" customModule="market" customModuleProvider="target">
@@ -3717,6 +3718,7 @@ RGlyZWNjaRvDs24
     <inferredMetricsTieBreakers>
         <segue reference="7OC-0U-G6A"/>
         <segue reference="efF-L3-B8P"/>
+        <segue reference="5Rh-j2-2l6"/>
         <segue reference="eiB-MW-S22"/>
         <segue reference="7OZ-fP-4gb"/>
         <segue reference="fLL-eV-Jg1"/>

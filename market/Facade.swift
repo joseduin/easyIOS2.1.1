@@ -481,15 +481,14 @@ class Facade {
         var carritoDetalle: [CarritoDetalle] = [CarritoDetalle]()
         
         var existenArticulosEnElCarrito: Bool = true
-        
+
         if (elemento["associations"].exists()) {
             let assocations = elemento["associations"]
-            
             
             if (assocations["cart_rows"].exists()) {
                 let array = assocations["cart_rows"]
                 for (_, subJson):(String, JSON) in array {
-                    carritoDetalle.append(CarritoDetalle(id_product: buscarJson(json: subJson, element: "id_productd"),
+                    carritoDetalle.append(CarritoDetalle(id_product: buscarJson(json: subJson, element: "id_product"),
                                                          id_product_attribute: buscarJson(json: subJson, element: "id_product_attribute"),
                                                          id_address_delivery: buscarJson(json: subJson, element: "id_address_delivery"),
                                                          quantity: buscarJson(json: subJson, element: "quantity")))

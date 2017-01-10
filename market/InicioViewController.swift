@@ -20,6 +20,8 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var items : [NavigationModel]!
     var CATEGORIA_PADRE: Categoria = Categoria()
+    var ID_USUARIO: String = ""
+    var cart_id: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,9 +61,9 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Prueba
         let item7 = NavigationModel(title: "Como comprar", icon: "ic_lock_48pt")
         let item8 = NavigationModel(title: "Contactenos", icon: "ic_lock_48pt")
-
+        let item9 = NavigationModel(title: "Carrito", icon: "ic_lock_48pt")
         
-        items = [item1, item2, item3, itemEmpty, item4, item5, item6, item7, item8]
+        items = [item1, item2, item3, itemEmpty, item4, item5, item6, item7, item8, item9]
         
         isLogin()
     }
@@ -114,6 +116,8 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
             break;
         case 8:
             self.performSegue(withIdentifier: "ContactoViewController", sender: self)
+        case 9:
+            existeCarrito()
         default:
             print(items[index].title)
         }
@@ -143,6 +147,29 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
             addEventViewController.CATEGORIA_PADRE = self.CATEGORIA_PADRE
             addEventViewController.TITULO = 0
             addEventViewController.PADRE = ""
+        } else if segue.identifier == "CarritoViewController" {
+            
+            let nav = segue.destination as! UINavigationController
+            let addEventViewController = nav.topViewController as! CarritoViewController
+            
+            addEventViewController.carritoId = cart_id
+        }
+    }
+    
+    func existeCarrito() {
+        ID_USUARIO = UserDefaults.standard.string(forKey: "id")!
+        print("\(self.facade.WEB_PAGE)/carts?filter[id_customer]=\(ID_USUARIO)&\(facade.parametrosBasicos())")
+        Alamofire.request("\(self.facade.WEB_PAGE)/carts?filter[id_customer]=\(ID_USUARIO)&\(facade.parametrosBasicos())").validate().responseJSON { response in
+            switch response.result {
+            case .success:
+                if let JSON = response.result.value {
+                    self.cart_id = self.facade.existeCarrito(res: JSON)
+                    self.performSegue(withIdentifier: "CarritoViewController", sender: self)
+                }
+            case .failure(let error):
+                self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
+                print(error)        // Poner en comentario
+            }
         }
     }
     

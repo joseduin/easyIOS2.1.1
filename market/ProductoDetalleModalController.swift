@@ -23,6 +23,7 @@ class ProductoDetalleModalController: UIViewController {
     var cantidad_desc: String = ""
     var total_desc: String = ""
     var ID_USUARIO: String = ""
+    var cart_id: String = ""
     
     let facade: Facade = Facade()
     
@@ -53,15 +54,27 @@ class ProductoDetalleModalController: UIViewController {
     }
     
     func existeCarrito() {
-        Alamofire.request("\(self.facade.WEB_PAGE)/carts?filter[id_customer]=\(ID_USUARIO)?\(facade.parametrosBasicos())").validate().responseJSON { response in
+        Alamofire.request("\(self.facade.WEB_PAGE)/carts?filter[id_customer]=\(ID_USUARIO)&\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
-                // ir al carrito
-                break
+                if let JSON = response.result.value {
+                    self.cart_id = self.facade.existeCarrito(res: JSON)
+                    self.performSegue(withIdentifier: "CarritoViewController2", sender: self)
+                }
             case .failure(let error):
                 self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
                 print(error)        // Poner en comentario
             }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CarritoViewController2" {
+            
+            let nav = segue.destination as! UINavigationController
+            let addEventViewController = nav.topViewController as! CarritoViewController
+            
+            addEventViewController.carritoId = cart_id
         }
     }
     

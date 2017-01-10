@@ -13,7 +13,6 @@ import Haneke
 class BusquedaViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // listener al scrol del tableview, cargar de a dos art 
-    // Pasar la imagen de sadSearch
     
     @IBOutlet weak var botonesFiltro: UISegmentedControl!
     @IBOutlet weak var sadSearch: UIImageView!
