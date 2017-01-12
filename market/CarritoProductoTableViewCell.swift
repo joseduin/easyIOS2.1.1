@@ -40,21 +40,16 @@ class CarritoProductoTableViewCell: UITableViewCell {
     }
     
     func actualizarCantidadDeProductosEnCarrito(cantidad: Double) {
-        //print("\(facade.WEB_API_AUX)UCartItemQuantity.php?id=\(carrito.id)&row=\(position)&qua=\(Int(cantidad))")
-        //Alamofire.request("\(facade.WEB_API_AUX)UCartItemQuantity.php?id=\(carrito.id)&row=\(position)&qua=\(Int(cantidad))").validate().responseJSON { response in
-        print("\(facade.WEB_API_AUX)hora.php")
-        Alamofire.request("\(facade.WEB_API_AUX)hora.php").validate().responseJSON { response in
+        print("\(facade.WEB_API_AUX)UCartItemQuantity.php?id=\(carrito.id)&row=\(position)&qua=\(Int(cantidad))")
+        Alamofire.request("\(facade.WEB_API_AUX)UCartItemQuantity.php?id=\(carrito.id)&row=\(position)&qua=\(Int(cantidad))").validate().responseJSON { response in
             switch response.result {
-            case .success:
-                print("hola")
+            case .success: break
+  
+            default:                
                 let precioString = self.precioUnitario.text?.replacingOccurrences(of: "$ ", with: "")
-                print("holi")
                 self.precioTotal.text = "$ \(String(format: "%.2f", (Double(precioString!)! * cantidad)))"
-                print("holis")
                 self.controller?.calcularTotales()
-                print("qlq")
-            default: break
-                
+                break
             }
         }
         

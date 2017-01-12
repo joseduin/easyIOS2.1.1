@@ -20,7 +20,7 @@ class Facade {
     let COOKIE_KEY = "GDgdWYxjQFPOyabc7OCT5zk8L4xB2UZzTyyIzZ7E4KLUOw8g4i67Q9s2"
     
     let WEB_PAGE = "http://easymarket.ec/alpha/api"                             // Configurado
-    let WEB_API_AUX = "https://app-easymarket.com/service/examples/"            // Configurado
+    let WEB_API_AUX = "http://app-easymarket.com/service/examples/"            // Configurado
     let ERROR_LOADING = "Revise su conexion a internet"
     
     let STR_DATE_FORMAT = "yyyy-MM-dd"

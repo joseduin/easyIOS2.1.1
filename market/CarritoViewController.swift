@@ -14,7 +14,7 @@ import Haneke
 class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
    
     
-    // app-easymarket.com cambiar al otro dominio que no recuerdo como era :D
+    // poner progressbar everywhere
     // al final obtener carrito con las cantidades?
     
     @IBOutlet weak var contenedorResumen: UIView!
@@ -418,11 +418,15 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     //Linea 566
     
     func subtotal() -> Double {
-        var acum: Double = 0.0;
+        var acum: Double = 0.0
         for index in 0..<productos.count {
+            
+            
+            let indexs = IndexPath.init(row: index, section: 0)
+            let cell = tableProductos.cellForRow(at: indexs) as! CarritoProductoTableViewCell
             let precioNeto = preciosNetos[index]
             
-            acum = precioNeto * Double(CARRITO_ACTUAL.carritoDetalles[index].quantity)!
+            acum += precioNeto * Double(cell.valor.text!)!
         }
         return acum;
     }

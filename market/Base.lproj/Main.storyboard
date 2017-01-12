@@ -73,7 +73,7 @@
                                                         <rect key="frame" x="0.0" y="207" width="316" height="44"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Drp-LK-J5L" id="ZWj-uh-WHe">
-                                                            <rect key="frame" x="0.0" y="0.0" width="316" height="44"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="316" height="43"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZX3-b7-t87">
@@ -954,15 +954,15 @@ RGlyZWNjaRvDs24
                                         <rect key="frame" x="0.0" y="28" width="375" height="151"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Cgw-IY-nIC" id="Evw-AK-BAj">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="151"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xgE-Cm-7jn" customClass="CardView" customModule="market" customModuleProvider="target">
-                                                    <rect key="frame" x="2" y="3" width="357" height="141"/>
+                                                    <rect key="frame" x="2" y="3" width="356" height="141"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="02/12/2016" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piK-1v-d3D">
-                                                            <rect key="frame" x="3" y="0.0" width="341" height="21"/>
+                                                            <rect key="frame" x="3" y="0.0" width="340" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -976,42 +976,42 @@ RGlyZWNjaRvDs24
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="UXKALEMAMSLAS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SgO-jc-bP0">
-                                                            <rect key="frame" x="109" y="21" width="235" height="21"/>
+                                                            <rect key="frame" x="108" y="21" width="235" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V35-kI-Q6b">
-                                                            <rect key="frame" x="3" y="45" width="97" height="21"/>
+                                                            <rect key="frame" x="3" y="45" width="96" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$19.05" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lue-gf-X7w">
-                                                            <rect key="frame" x="109" y="45" width="235" height="21"/>
+                                                            <rect key="frame" x="108" y="45" width="235" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pago:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAE-aB-tSO">
-                                                            <rect key="frame" x="3" y="74" width="97" height="21"/>
+                                                            <rect key="frame" x="3" y="74" width="96" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Transferencia bancaria" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwi-uf-DEq">
-                                                            <rect key="frame" x="109" y="74" width="172" height="21"/>
+                                                            <rect key="frame" x="108" y="74" width="172" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <webView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hCp-vz-BLK">
-                                                            <rect key="frame" x="3" y="103" width="341" height="38"/>
+                                                            <rect key="frame" x="3" y="103" width="340" height="38"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                             <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </webView>
@@ -1279,7 +1279,7 @@ RGlyZWNjaRvDs24
                                                         <rect key="frame" x="0.0" y="28" width="375" height="347"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QAH-iK-c3F" id="djT-FO-mzA">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="347"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="346"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFJ-Lf-qly" customClass="CardView" customModule="market" customModuleProvider="target">
@@ -1893,11 +1893,11 @@ RGlyZWNjaRvDs24
                                                         <rect key="frame" x="0.0" y="207" width="316" height="44"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fNp-0X-12f" id="Tg8-bM-ZBZ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="316" height="44"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="316" height="43"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ei8-tu-9hy">
-                                                                    <rect key="frame" x="74" y="11" width="210" height="21"/>
+                                                                    <rect key="frame" x="73" y="11" width="211" height="21"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
@@ -2182,7 +2182,7 @@ RGlyZWNjaRvDs24
                                         <rect key="frame" x="0.0" y="28" width="375" height="202"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zrv-CJ-a0j" id="8Qv-3m-RvS">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="202"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="201"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KIQ-zB-U6m" customClass="CardView" customModule="market" customModuleProvider="target">
@@ -2815,7 +2815,7 @@ RGlyZWNjaRvDs24
                                                         <rect key="frame" x="0.0" y="28" width="375" height="347"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qvm-YN-3Dd" id="TJQ-th-bTT">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="347"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="346"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uBi-mf-ZgE" customClass="CardView" customModule="market" customModuleProvider="target">
@@ -3016,7 +3016,7 @@ RGlyZWNjaRvDs24
                                                         <rect key="frame" x="0.0" y="28" width="359" height="81"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C1q-sY-rcZ" id="nE9-ym-2Gp">
-                                                            <rect key="frame" x="0.0" y="0.0" width="359" height="81"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="359" height="80"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7S0-cd-uU4">
@@ -3286,7 +3286,7 @@ RGlyZWNjaRvDs24
                                                         <rect key="frame" x="0.0" y="28" width="341" height="101"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fhM-wR-DGF" id="GXO-pv-M0v">
-                                                            <rect key="frame" x="0.0" y="0.0" width="341" height="101"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="341" height="100"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2jO-vp-nEo" customClass="CardView" customModule="market" customModuleProvider="target">
@@ -3409,6 +3409,7 @@ RGlyZWNjaRvDs24
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NOg-E8-v7e" customClass="checkBox" customModule="market" customModuleProvider="target">
                                         <rect key="frame" x="26" y="152" width="25" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" red="1" green="0.38431372549019605" blue="0.070588235294117646" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Button" image="ic_check_box"/>
                                         <connections>
                                             <action selector="checkDirecciones:" destination="wCX-HD-nOW" eventType="touchUpInside" id="iHq-O7-mYX"/>
