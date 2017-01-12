@@ -13,6 +13,8 @@ import Haneke
 
 class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
    
+    
+    // app-easymarket.com cambiar al otro dominio que no recuerdo como era :D
     // al final obtener carrito con las cantidades?
     
     @IBOutlet weak var contenedorResumen: UIView!
@@ -42,11 +44,13 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         pickerDir1.reloadAllComponents()
         pickerDir2.reloadAllComponents()
         
+        buscarDirecciones()
+        
         contenedorProductosScroll.isHidden = true
         contenedorDirecciones.isHidden = false
         self.navigationItem.title = "Dirección - Paso 2 / 4"
-        direccionesNavBar.isEnabled = false
-        direccionesNavBar.tintColor = UIColor.white
+        direccionesNavBar.isEnabled = true
+        direccionesNavBar.tintColor = UIColor(red:255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1)
     }
     
     // direcciones
@@ -60,13 +64,15 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBAction func Siguiente2(_ sender: UIButton) {
         listaEnvios.removeAll()
         tableTransporte.reloadData()
+        
+        //listaEnvios.append(primerEnvio)
         seguirBuscandoEnvio(hijo: 0, envio: primerEnvio)
 
         contenedorDirecciones.isHidden = true
         contenedorTransporteScroll.isHidden = false
         self.navigationItem.title = "Transporte - Paso 3 / 4"
-        direccionesNavBar.isEnabled = true
-        direccionesNavBar.tintColor = nil
+        direccionesNavBar.isEnabled = false
+        direccionesNavBar.tintColor = UIColor(red:255/255.0, green: 98/255.0, blue: 18/255.0, alpha: 1)
     }
     @IBAction func checkDirecciones(_ sender: checkBox) {
         isCheckDirecciones = !isCheckDirecciones
@@ -171,16 +177,17 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         pickerDir2.dataSource = self
         pickerDir2.delegate = self
         
+        direccionesNavBar.isEnabled = false
+        direccionesNavBar.tintColor = UIColor(red:255/255.0, green: 98/255.0, blue: 18/255.0, alpha: 1)
+        
         pickerDir1.tag = 1
         pickerDir2.tag = 2
         
-        USUARIO_ID = UserDefaults.standard.string(forKey: "email")!
+        USUARIO_ID = UserDefaults.standard.string(forKey: "id")!
         
-        pickerDir1.isHidden = true
+        pickerDir1.isHidden = false
         pickerDir2.isHidden = true
         
-        direccionesNavBar.isEnabled = true
-        direccionesNavBar.tintColor = nil
         checkTerminoServicio.isChecked = false
         
         if (carritoId == "no") {
@@ -207,9 +214,10 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print(row)
         if pickerView == pickerDir1 {
-            DIR_ACT = row
+            print(direcciones[row].id)
+            DIR_ACT = Int(direcciones[row].id)!
         } else if pickerView == pickerDir2 {
-            DIR_FAC = row
+            DIR_FAC = Int(direcciones[row].id)!
         }
     }
 
@@ -377,7 +385,9 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     func calcularTotales() {
         let subtot = subtotal()
         totalProducto.text = "$ \(subtotal())"
-
+        let precioTr:String = (totalEnvio.text?.replacingOccurrences(of: "$ ", with: ""))!
+        print(precioTr)
+        precioTransporte = Double(precioTr)!
         let tot: Double = subtot + precioTransporte
         total.text = "$ \(tot)"
     }
@@ -441,6 +451,11 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
                 if let JSON = response.result.value {
                     let direccion: Direccion = self.facade.buscarDireccion(res: JSON)
                     self.direcciones.append(direccion)
+                    
+                    if (hijo == 0) {
+                        self.DIR_ACT = Int(direccion.id)!
+                        self.DIR_FAC = Int(direccion.id)!
+                    }
                     self.seguirBuscando(lista: self.ids, hijo: hijo)
                 }
             case .failure( _):
@@ -504,9 +519,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
             case .success:
                 if let JSON = response.result.value {
                     var id_delivery: [String] = self.facade.buscarDeliveries(res: JSON)
-                    print("id delivery -> \(id_delivery)")
                     self.buscarPrecio(s: id_delivery[0], hijo: hijo, envio: envio, imprimir: imprimir)
-                    print("epa")
                 }
             case .failure( _):
                 self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
@@ -524,7 +537,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
-                    let deliveries: Deliveries = self.facade.buscarDelivery(res: JSON);
+                    let deliveries: Deliveries = self.facade.buscarDelivery(res: JSON)
                     envio.deliveries = deliveries;
                     
                     if (imprimir) {
@@ -533,6 +546,8 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
                         self.primerEnvio = envio
                         let precio: Double = self.calcularPrecioEnvio(envio: envio)
                         self.preciosCarriers.append(precio)
+                        self.totalEnvio.text = "$ \(String(format: "%.2f", Double(deliveries.price)!))"
+                        print("calcularTotales")
                         self.calcularTotales()
                         //conversor.ActionProcessButtonValidation(btnSiguienteCarrito, true);
                     }
@@ -546,6 +561,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func seguirBuscandoEnvio(hijo: Int, envio: Carrier) {
+        insertEnvio(envio: envio)
         let hi = hijo + 1
         
         if (hi < envio_id.count) {     // ¿Hay mas envios?
@@ -569,7 +585,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func calcularPrecioEnvio(envio: Carrier) -> Double {
-        var precio: Double = Double(envio.deliveries.price.replacingOccurrences(of: ",", with: "."))!
+        var precio: Double = Double(envio.deliveries.price)!
         
         //   if (envio.getShipping_handling().equals("1")) {
         //      precio += shipping_handling;
@@ -630,10 +646,11 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.navigationItem.title = "Resumen del pedido"
         
         metodoPago.text = "Ha elegido \(tipoPago.lowercased()). Aquí tiene un resumen de su pedido:"
-        importe.text = "* El importe total de su pedido es $ \( String(format: "%.2f", Double((total.text?.replacingOccurrences(of: "$", with: ""))!)!)) (impuestos inc.)"
+        importe.text = "* El importe total de su pedido es $ \( String(format: "%.2f", Double((total.text?.replacingOccurrences(of: "$ ", with: ""))!)!)) (impuestos inc.)"
         aceptamosMonedaDolar.text = "* Aceptamos las siguientes monedas para las transferencias bancarias: Dolar."
         
         if (tipo == 0) {
+            imformacion.isHidden = false
             imformacion.text = "* La información para realizar la transferencia bancaria aparecerá en la página siguiente."
         } else {
             imformacion.isHidden = true
@@ -650,16 +667,16 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         let id_cart = CARRITO_ACTUAL.id
         let id_currency = 1
         let id_lang = 1
-        let id_carrier = envio_id
+        let id_carrier = envio_id[EnvioActivo]
         let module = MODULE
         let payment = PAYMENT
-        let total_paid = "\(total.text?.replacingOccurrences(of: "$", with: ""))"
+        let total_paid = (total.text?.replacingOccurrences(of: "$ ", with: ""))!
         let total_paid_real = 0
         let total_products = String(self.subtotal())
-        let total_products_wt = "\(totalProducto.text?.replacingOccurrences(of: "$", with: ""))"
+        let total_products_wt = (totalProducto.text?.replacingOccurrences(of: "$ ", with: ""))!
         let conversion_rate = 1
         
-        let params: [String: Any] = ["id_address_delivery": id_address_delivery, "id_address_invoice": id_address_invoice, "id_cart": id_cart, "id_currency": id_currency, 	"id_currency": id_currency, "id_lang": id_lang, "id_carrier": id_carrier, "module": module, "payment": payment, "total_paid": total_paid, "total_paid_real": total_paid_real, "total_products": total_products, "total_products_wt": total_products_wt, "conversion_rate": conversion_rate]
+        let params: [String: Any] = ["id_address_delivery": id_address_delivery, "id_address_invoice": id_address_invoice, "id_cart": id_cart, "id_currency": id_currency, "id_lang": id_lang, "id_carrier": id_carrier, "module": module, "payment": payment, "total_paid": total_paid, "total_paid_real": total_paid_real, "total_products": total_products, "total_products_wt": total_products_wt, "conversion_rate": conversion_rate]
         
         Alamofire.request("\(facade.WEB_API_AUX)CCartOrder.php?", method: .post, parameters: params, encoding: JSONEncoding.default).validate().responseJSON {
             response in
@@ -871,15 +888,15 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
             contenedorDirecciones.isHidden = false
             
             self.navigationItem.title = "Dirección - Paso 2 / 4"
-            direccionesNavBar.isEnabled = false
-            direccionesNavBar.tintColor = UIColor.white
+            direccionesNavBar.isEnabled = true
+            direccionesNavBar.tintColor = UIColor(red:255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1)
         } else if (!contenedorDirecciones.isHidden) {
             contenedorDirecciones.isHidden = true
             contenedorProductosScroll.isHidden = false
             
             self.navigationItem.title = "Carrito - Paso 1 / 4"
-            direccionesNavBar.isEnabled = true
-            direccionesNavBar.tintColor = nil
+            direccionesNavBar.isEnabled = false
+            direccionesNavBar.tintColor = UIColor(red:255/255.0, green: 98/255.0, blue: 18/255.0, alpha: 1)
         } else {
             dismiss(animated: true, completion: nil)
         }

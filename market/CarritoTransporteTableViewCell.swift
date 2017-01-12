@@ -30,7 +30,8 @@ class CarritoTransporteTableViewCell: UITableViewCell {
     }
 
     @IBAction func checkSelected(_ sender: Any) {
-        if (check.isChecked) {
+        print(check.isChecked)
+        if (!check.isChecked) {
             controller?.check(envio: (controller!.listaEnvios[row]), hijo: row)
         }
     }
