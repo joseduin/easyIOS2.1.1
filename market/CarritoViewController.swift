@@ -685,13 +685,15 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         Alamofire.request("\(facade.WEB_API_AUX)CCartOrder.php?", method: .post, parameters: params, encoding: JSONEncoding.default).validate().responseJSON {
             response in
             switch response.result {
-            case .success:
-                self.buscarOrderRealizada();
-            case .failure(let error):
+            case .success: break
+                
+            /*case .failure(let error):
                 self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
                 print(error)
+            */
+            default:
+                self.buscarOrderRealizada()
             }
-            
         }
         
     }

@@ -129,11 +129,13 @@ class RegistroViewController: UIViewController {
         
         Alamofire.request("\(facade.WEB_API_AUX)CCustomer.php?Create=Creating", method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).validate().responseJSON { response in
             switch response.result {
-            case .success:
-                self.buscarCustomerId(nom: nom!, ape: ape!, email: email);
-            case .failure(let error):
-                self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-                print(error)
+            case .success: break
+                
+            //case .failure(let error):
+            //    self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
+            //    print(error)
+            default:
+              self.buscarCustomerId(nom: nom!, ape: ape!, email: email);
             }
         }
     }
@@ -176,11 +178,13 @@ class RegistroViewController: UIViewController {
  
         Alamofire.request("\(facade.WEB_API_AUX)CAddress.php?Create=Creating", method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).validate().responseJSON { response in
             switch response.result {
-            case .success:
+            case .success: break
+                
+            //case .failure(let error):
+            //    self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
+            //    print(error)
+            default:
                 self.buscarCustomer(id: id);
-            case .failure(let error):
-                self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-                print(error)
             }
         }
     }

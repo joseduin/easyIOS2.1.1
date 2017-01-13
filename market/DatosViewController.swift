@@ -105,11 +105,13 @@ class DatosViewController: UIViewController {
             
             response in
             switch response.result {
-            case .success:
+            case .success: break
+                
+            //case .failure(let error):
+            //    self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
+            //    print(error)
+            default:
                 self.mensaje(mensaje: "Cambios guardados!", cerrar: false)
-            case .failure(let error):
-                self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-                print(error)
             }
         }
     }

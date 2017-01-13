@@ -331,11 +331,13 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
         let params: Parameters = Parameters()
         Alamofire.request("\(self.facade.WEB_API_AUX)UCartItemQuantity.php?id=\(id)&row=\(row)&qua=\(cantidadTotal)", method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).validate().responseJSON { response in
             switch response.result {
-            case .success:
+            case .success: break
+                
+            //case .failure(let error):
+            //    self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
+            //    print(error)        // Poner en comentario
+            default:
                 self.stepper.maximumValue = Double(self.STOCK - cantidadTotal)
-            case .failure(let error):
-                self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-                print(error)        // Poner en comentario
             }
         }
     }

@@ -40,7 +40,6 @@ class CarritoProductoTableViewCell: UITableViewCell {
     }
     
     func actualizarCantidadDeProductosEnCarrito(cantidad: Double) {
-        print("\(facade.WEB_API_AUX)UCartItemQuantity.php?id=\(carrito.id)&row=\(position)&qua=\(Int(cantidad))")
         Alamofire.request("\(facade.WEB_API_AUX)UCartItemQuantity.php?id=\(carrito.id)&row=\(position)&qua=\(Int(cantidad))").validate().responseJSON { response in
             switch response.result {
             case .success: break

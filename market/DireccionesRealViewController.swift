@@ -198,15 +198,17 @@ class DireccionesRealViewController: UIViewController, UITableViewDelegate, UITa
         
         Alamofire.request("\(facade.WEB_API_AUX)/DAddress?DeleteID=/\(self.ids[hijo])?\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
-            case .success:
+            case .success: break
+                
+                
+            //case .failure( _):
+            //    self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
+            default:
                 if response.result.value != nil {
                     //  mContainerView.removeViewAt(hijo);              REMOVER DE VISTA
                     self.ids.remove(at: hijo);
                     self.mensaje(mensaje: "Se elimino correctamente la direccion", cerrar: false);
                 }
-            case .failure( _):
-                self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-                
             }
         }
     }
