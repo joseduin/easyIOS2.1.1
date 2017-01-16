@@ -24,6 +24,7 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
     @IBOutlet weak var agregarCarrito: UIButton!
     @IBOutlet weak var valorStepper: UILabel!
     @IBOutlet weak var stepper: UIStepper!
+    @IBOutlet weak var dscrpcn: UITextView!
     
     let facade: Facade = Facade()
     
@@ -54,6 +55,23 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
         nombre.text = productoPass.name
         referencia.text = productoPass.reference
         descripcion.loadHTMLString(productoPass.description_short, baseURL: nil)
+        //dscrpcn.text = productoPass.description_short
+        
+        // create attributed string
+        let myString = productoPass.description_short
+        let myAttribute = [ NSBackgroundColorAttributeName: UIColor.yellow ]
+        let myAttrString = NSAttributedString(string: myString, attributes: myAttribute)
+
+        
+        
+        /*let attrStr = try! NSAttributedString(
+            data: productoPass.description_short.data(using: String.Encoding.unicode, allowLossyConversion: true)!,
+            options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+            documentAttributes: nil)*/
+        dscrpcn.attributedText = myAttrString
+        
+        
+       // dscrpcn.attributedText = productoPass.description_short
         buscarImagen(id: "\(productoPass.id)/\(productoPass.imagenes[0])", tipo: "products", imagenSize: "large_default", imagen: ImagenMuestra)
         
         //if (producto.getDescuentos() == null) {

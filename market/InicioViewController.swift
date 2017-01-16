@@ -11,11 +11,12 @@ import Alamofire
 
 class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet var inicioView: UIView!
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var correoNavigation: UILabel!
     @IBOutlet weak var menuContenedor: UITableView!
-    
+    @IBOutlet weak var indexView: UIView!
     let facade: Facade = Facade()
     
     var items : [NavigationModel]!
@@ -63,7 +64,7 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let item8 = NavigationModel(title: "Contactenos", icon: "ic_lock_48pt")
         let item9 = NavigationModel(title: "Carrito", icon: "ic_lock_48pt")
         
-        items = [item1, item2, item3, itemEmpty, item4, item5, item6, item7, item8, item9]
+        items = [item1, item2, item3, itemEmpty, item4, item5, item6]
         
         isLogin()
     }
@@ -110,18 +111,53 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
             break
             
             
-            // Prueba
+            /* Prueba
         case 7:
             self.performSegue(withIdentifier: "ComoComprarViewController", sender: self)
             break;
         case 8:
             self.performSegue(withIdentifier: "ContactoViewController", sender: self)
         case 9:
-            existeCarrito()
+            existeCarrito()*/
         default:
             print(items[index].title)
         }
     }
+    
+    
+    @IBAction func productos(_ sender: Any) {
+        buscarCategorias()
+    }
+    
+    @IBAction func comoComprar(_ sender: Any) {
+        self.performSegue(withIdentifier: "ComoComprarViewController", sender: self)
+    }
+    
+    @IBAction func carrito(_ sender: Any) {
+    }
+    
+    @IBAction func pedidos(_ sender: Any) {
+        self.performSegue(withIdentifier: "direccionesView", sender: self)
+    }
+    
+    @IBAction func perfil(_ sender: Any) {
+        self.performSegue(withIdentifier: "datosView", sender: self)
+    }
+    
+    @IBAction func direcciones(_ sender: Any) {
+        self.performSegue(withIdentifier: "direccionesRealView", sender: self)
+    }
+    
+    @IBAction func Contacto(_ sender: Any) {
+        self.performSegue(withIdentifier: "ContactoViewController", sender: self)
+    }
+    
+    @IBAction func cerrarSesion(_ sender: Any) {
+        btnLogOut()
+    }
+
+    
+    
     
     func buscarCategorias() {
         Alamofire.request("\(self.facade.WEB_PAGE)/categories/22?\(facade.parametrosBasicos())").validate().responseJSON { response in
@@ -232,6 +268,7 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
             // botonMenu.image = UIImage(named: "lupa")
             shadowView.isHidden = false
             menuView.isHidden = false
+            inicioView.bringSubview(toFront: shadowView)
             shadowView.layer.backgroundColor = UIColor.gray.withAlphaComponent(0.0).cgColor
             menuView.center = CGPoint(x: -centerX, y: centerY)
             

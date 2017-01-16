@@ -51,7 +51,11 @@ class ContactoViewController: UIViewController {
         super.didReceiveMemoryWarning()
 
     }
-    
+    @IBAction func sitioWeb(_ sender: Any) {
+        if let url = URL(string: "http://easymarket.ec") {
+            UIApplication.shared.open(url)
+        }
+    }
    
     @IBAction func btnAtras(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
