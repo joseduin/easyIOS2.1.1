@@ -77,9 +77,9 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBAction func checkDirecciones(_ sender: checkBox) {
         isCheckDirecciones = !isCheckDirecciones
         if (isCheckDirecciones) {
-            pickerDir2.isHidden = false
-        } else {
             pickerDir2.isHidden = true
+        } else {
+            pickerDir2.isHidden = false
         }
     }
     

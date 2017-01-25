@@ -17,6 +17,8 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var correoNavigation: UILabel!
     @IBOutlet weak var menuContenedor: UITableView!
     @IBOutlet weak var indexView: UIView!
+    
+    @IBOutlet weak var visitorView: UIView!
     let facade: Facade = Facade()
     
     var items : [NavigationModel]!
@@ -156,8 +158,20 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
         btnLogOut()
     }
 
+    @IBAction func vproductos(_ sender: Any) {
+        buscarCategorias()
+    }
     
+    @IBAction func iniciarSesion(_ sender: Any) {
+        self.performSegue(withIdentifier: "loginView", sender: self)
+    }
     
+    @IBAction func vcomoComprar(_ sender: Any) {
+        self.performSegue(withIdentifier: "ComoComprarViewController", sender: self)
+    }
+    @IBAction func vcontacto(_ sender: Any) {
+        self.performSegue(withIdentifier: "ContactoViewController", sender: self)
+    }
     
     func buscarCategorias() {
         Alamofire.request("\(self.facade.WEB_PAGE)/categories/22?\(facade.parametrosBasicos())").validate().responseJSON { response in
@@ -240,7 +254,10 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func isLogin() {
         let isLogin: Bool = UserDefaults.standard.bool(forKey: "isLogin")
         if (!isLogin) {
-            self.performSegue(withIdentifier: "loginView", sender: self)
+            inicioView.bringSubview(toFront: visitorView)
+            //self.performSegue(withIdentifier: "loginView", sender: self)
+        } else {
+            inicioView.bringSubview(toFront: indexView)
         }
     }
     

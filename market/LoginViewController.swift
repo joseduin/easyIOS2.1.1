@@ -49,6 +49,9 @@ class LoginViewController: UIViewController {
         existeCustomer(email: correo!, password: contraseña!)
     }
     
+    @IBAction func inicio(_ sender: Any) {
+    }
+    
     func existeCustomer(email: String, password: String) {
         let pass = facade.MD5(string: password)
 
@@ -102,6 +105,12 @@ class LoginViewController: UIViewController {
         
         self.dismiss(animated: true, completion: nil)
     }
+    
+   
+    @IBAction func inicioView(_ sender: Any) {
+        self.performSegue(withIdentifier: "indexView", sender: self)
+    }
+    
     
     @IBAction func btnAtras(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
