@@ -13,13 +13,14 @@ import DatePickerDialog
 
 class RegistroViewController: UIViewController {
     
-    // Probar esta verga
+    // pasar a kevin
 
     @IBOutlet weak var nombre: UITextField!
     @IBOutlet weak var apellido: UITextField!
     @IBOutlet weak var f_nacimiento: UITextField!
     @IBOutlet weak var correo: UITextField!
     @IBOutlet weak var clave: UITextField!
+    @IBOutlet weak var ruc: UITextField!
     @IBOutlet weak var dir: UITextField!
     @IBOutlet weak var dir2: UITextField!
     @IBOutlet weak var ciudad: UITextField!
@@ -158,35 +159,50 @@ class RegistroViewController: UIViewController {
     }
     
     func agregarNuevaDireccion(id: String) {
-        let telefono: String = (tlf.text?.isEmpty)! ? "" : tlf.text!
-        let movil: String = (tlf_m.text?.isEmpty)! ? "" : tlf_m.text!
+        let firstname = nombre.text
+        let lastname = apellido.text
+        let company = ""
+        let address1 = dir.text
+        let address2 = dir2.text
+        let city = ciudad.text
+        let phone = (tlf.text?.isEmpty)! ? "" : tlf.text!
+        let phone_mobile = (tlf_m.text?.isEmpty)! ? "" : tlf_m.text!
+        let other = adicional.text
+        let alias = self.alias.text
+        let dni = ruc.text
         
-        let params: Parameters = ["id_customer": "\(id)",
-                                "id_country": "81",
-                                "id_state": "313",
-                                "alias": "\(alias.text)",
-                                "firstname": "\(nombre.text)",
-                                "lastname": "\(apellido)",
-                                "phone": "\(telefono)",
-                                "address1": "\(dir.text)",
-                                "address2": "\(dir2.text)",
-                                "city": "\(ciudad.text)",
-                                "phone_mobile": "\(movil)",
-                                "other": "\(adicional.text)"]
+        if ( (firstname?.isEmpty)! || (lastname?.isEmpty)! || (dni?.isEmpty)! || (address1?.isEmpty)! || (city?.isEmpty)! || ((phone.isEmpty) && (phone_mobile.isEmpty)) || (alias?.isEmpty)!) {
+            
+            mensaje(mensaje: "Rellene los campos requeridos", cerrar: false)
+            return;
+        }
         
+        let idcustomer = id
         
- 
-        Alamofire.request("\(facade.WEB_API_AUX)CAddress.php?Create=Creating", method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).validate().responseJSON { response in
-            switch response.result {
-            case .success: break
-                
-            //case .failure(let error):
-            //    self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-            //    print(error)
-            default:
-                self.buscarCustomer(id: id);
+        var request = URLRequest(url: URL(string: "\(facade.WEB_API_AUX)CAddress.php?Create=Creating")!)
+        request.httpMethod = "POST"
+        let postString = "id_customer=\(idcustomer)&id=\(id)&firstname=\(firstname!)&lastname=\(lastname!)&company=\(company)&address1=\(address1!)&address2=\(address2!)&city=\(city!)&id_state=313&id_country=81&phone=\(phone)&phone_mobile=\(phone_mobile)&other=\(other!)&alias=\(alias!)&dni=\(dni)"
+        print("AQUIII \(postString)")
+        request.httpBody = postString.data(using: .utf8)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                print("error=\(error)")
+                return
+            }
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(response)")
+            }
+            
+            let responseString = String(data: data, encoding: .utf8)
+            print("responseString = \(responseString)")
+            
+            DispatchQueue.main.sync {
+                self.buscarCustomer(id: id)
             }
         }
+        task.resume()
     }
     
     func buscarCustomer(id: String) {

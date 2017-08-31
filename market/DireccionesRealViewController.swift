@@ -34,8 +34,12 @@ class DireccionesRealViewController: UIViewController, UITableViewDelegate, UITa
         contenedorDirecciones.dataSource = self
         contenedorDirecciones.separatorStyle = .none
         contenedorDirecciones.backgroundColor = UIColor.clear
-        contenedorDirecciones.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
-        
+        contenedorDirecciones.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        items.removeAll()
+        contenedorDirecciones.reloadData()
         existenDirecciones()
     }
     
@@ -128,40 +132,26 @@ class DireccionesRealViewController: UIViewController, UITableViewDelegate, UITa
         cell.company.text = dir.company
         cell.direccion1.text = dir.address1
         cell.ciudad.text = dir.city
+        cell.ruc.text = dir.dni
         cell.pais.text = "Ecuador"
         cell.direccion2.text = dir.address2
         cell.alias.text = dir.alias
         cell.telefono1.text = dir.phone
         cell.telefono2.text = dir.phone_mobile
-        
+        cell.controller = self
+        cell.row = indexPath.row
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        self.dirPass = items[indexPath.row]
-        
-        performSegue(withIdentifier: "direccionRealView", sender: nil)
-        
-        
+         
     }
-    /*
-     func buscarEstado(web: UIWebView, order: Order) {
-     Alamofire.request("\(facade.WEB_PAGE)/order_states/\(order.current_state)?\(facade.parametrosBasicos())").validate().responseJSON { response in
-     switch response.result {
-     case .success:
-     if let JSON = response.result.value {
-     let valor = self.facade.buscarEstado(res: JSON)
-     let estado: String = "<span style=\"background-color:\(valor.color); border-color:\(valor.color);padding: 6px 10px; color: white;\">\(valor.nombre)</span>";
-     web.loadHTMLString(estado, baseURL: nil)                }
-     case .failure(let error):
-     self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-     print(error)        // Poner en comentario
-     }
-     }
-     }
-     */
+    
+    func irDireccion() {
+        performSegue(withIdentifier: "direccionRealView", sender: nil)
+
+    }
    
     @IBAction func btnAtras(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -188,15 +178,15 @@ class DireccionesRealViewController: UIViewController, UITableViewDelegate, UITa
     
     
     
-    func borrarDireccion(dir: Direccion, hijo: CFIndex) {
+    func borrarDireccion(hijo: Int) {
         
         if (ids.count == 1) {
             self.mensaje(mensaje: "No puede borrar todas las direcciones", cerrar: false);
             return;
         }
         
-        
-        Alamofire.request("\(facade.WEB_API_AUX)/DAddress?DeleteID=/\(self.ids[hijo])?\(facade.parametrosBasicos())").validate().responseJSON { response in
+        print("\(facade.WEB_API_AUX)DAddress?DeleteID=\(self.ids[hijo])")
+        Alamofire.request("\(facade.WEB_API_AUX)DAddress.php?DeleteID=\(self.ids[hijo])").validate().responseJSON { response in
             switch response.result {
             case .success: break
                 
@@ -204,23 +194,17 @@ class DireccionesRealViewController: UIViewController, UITableViewDelegate, UITa
             //case .failure( _):
             //    self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
             default:
-                if response.result.value != nil {
                     //  mContainerView.removeViewAt(hijo);              REMOVER DE VISTA
-                    self.ids.remove(at: hijo);
+                    self.items.remove(at: hijo)
+                    self.contenedorDirecciones.reloadData()
                     self.mensaje(mensaje: "Se elimino correctamente la direccion", cerrar: false);
-                }
+                
             }
         }
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+
+    @IBAction func agregarDireccion(_ sender: Any) {
+        irDireccion()
+    }
     
 }

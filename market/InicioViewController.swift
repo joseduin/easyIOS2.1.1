@@ -11,6 +11,8 @@ import Alamofire
 
 class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // Pasar a kevin
+    
     @IBOutlet var inicioView: UIView!
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var menuView: UIView!
@@ -61,13 +63,12 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let item5 = NavigationModel(title: "Mis Direcciones", icon: "ic_receipt")
         let item6 = NavigationModel(title: "Cerrar Sesión", icon: "ic_lock_48pt")
         
-        // Prueba
-        let item7 = NavigationModel(title: "Como comprar", icon: "ic_lock_48pt")
-        let item8 = NavigationModel(title: "Contactenos", icon: "ic_lock_48pt")
-        let item9 = NavigationModel(title: "Carrito", icon: "ic_lock_48pt")
-        
         items = [item1, item2, item3, itemEmpty, item4, item5, item6]
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        correoNavigation.text = UserDefaults.standard.string(forKey: "email")
         isLogin()
     }
     
@@ -100,8 +101,10 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.performSegue(withIdentifier: "direccionesView", sender: self)
             break
         case 2:
-            print(items[index].title)
+            existeCarrito()
             break
+        case 3:
+            print(items[index].title)
         case 4:
             self.performSegue(withIdentifier: "datosView", sender: self)
             break
@@ -135,10 +138,13 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.performSegue(withIdentifier: "ComoComprarViewController", sender: self)
     }
     
+  
     @IBAction func carrito(_ sender: Any) {
+         existeCarrito()
     }
     
-    @IBAction func pedidos(_ sender: Any) {
+    @IBAction func mispedidos(_ sender: Any) {
+  
         self.performSegue(withIdentifier: "direccionesView", sender: self)
     }
     
@@ -204,6 +210,8 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             addEventViewController.carritoId = cart_id
         }
+        
+        
     }
     
     func existeCarrito() {
@@ -222,6 +230,7 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
+
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
@@ -243,22 +252,6 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    // Vista despues de cargarse
-    override func viewDidAppear(_ animated: Bool) {        
-        correoNavigation.text = UserDefaults.standard.string(forKey: "email")
-        
-    }
-    
-    func isLogin() {
-        let isLogin: Bool = UserDefaults.standard.bool(forKey: "isLogin")
-        if (!isLogin) {
-            inicioView.bringSubview(toFront: visitorView)
-            //self.performSegue(withIdentifier: "loginView", sender: self)
-        } else {
-            inicioView.bringSubview(toFront: indexView)
-        }
     }
     
     func estiloSliderMenu() {
@@ -314,8 +307,30 @@ class InicioViewController: UIViewController, UITableViewDelegate, UITableViewDa
         UserDefaults.standard.set(false, forKey: "isLogin")
         UserDefaults.standard.synchronize()
         
-        self.performSegue(withIdentifier: "loginView", sender: self)
+        mostrarinicioFull(valor: false)
+        //inicioView.bringSubview(toFront: visitorView)
+        //self.performSegue(withIdentifier: "loginView", sender: self)
     }
+    
+    func isLogin() {
+        let isLogin: Bool = UserDefaults.standard.bool(forKey: "isLogin")
+        if (!isLogin) {
+            mostrarinicioFull(valor: false)
+            //inicioView.bringSubview(toFront: visitorView)
+            //self.performSegue(withIdentifier: "loginView", sender: self)
+        } else {
+            mostrarinicioFull(valor: true)
+            //inicioView.bringSubview(toFront: indexView)
+        }
+    }
+    
+    func mostrarinicioFull(valor: Bool) {
+        // true - muestra incioFull
+        // false - muestra visitor
+        indexView.isHidden = !valor
+        visitorView.isHidden = valor
+    }
+    
     
     // Botones
     @IBAction func irBusqueda(_ sender: Any) {

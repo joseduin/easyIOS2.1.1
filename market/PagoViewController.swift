@@ -58,7 +58,7 @@ class PagoViewController: UIViewController {
     
     @IBAction func irHome(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "Inicio2", sender: self)
-        dismiss(animated: true, completion: nil)
+        //dismiss(animated: true, completion: nil)
     }
 
 }

@@ -12,6 +12,8 @@ import Haneke
 
 class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    // identifer: FeatureViewCell, en la vista ProductoDetalle
+    
     @IBOutlet weak var ImagenMuestra: UIImageView!
     @IBOutlet weak var galeria: UICollectionView!
     @IBOutlet weak var nombre: UILabel!
@@ -19,12 +21,12 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
     @IBOutlet weak var referencia: UILabel!
     @IBOutlet weak var existenca: UILabel!
     @IBOutlet weak var precio: UILabel!
+    @IBOutlet weak var descripcioon: UITextView!
     @IBOutlet weak var descripcion: UIWebView!
     @IBOutlet weak var contenedorFeatures: UICollectionView!
     @IBOutlet weak var agregarCarrito: UIButton!
     @IBOutlet weak var valorStepper: UILabel!
     @IBOutlet weak var stepper: UIStepper!
-    @IBOutlet weak var dscrpcn: UITextView!
     
     let facade: Facade = Facade()
     
@@ -33,8 +35,6 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
     var ID_USUARIO: String = ""
     var STOCK: Int = 0
     var PRECIO_NETO: Double = 0.0
-    
-    var cantidadPass: Int = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,24 +54,12 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
         condicion.text = productoPass.condition
         nombre.text = productoPass.name
         referencia.text = productoPass.reference
-        descripcion.loadHTMLString(productoPass.description_short, baseURL: nil)
-        //dscrpcn.text = productoPass.description_short
         
-        // create attributed string
-        let myString = productoPass.description_short
-        let myAttribute = [ NSBackgroundColorAttributeName: UIColor.yellow ]
-        let myAttrString = NSAttributedString(string: myString, attributes: myAttribute)
-
-        
-        
-        /*let attrStr = try! NSAttributedString(
+        descripcioon.attributedText = try! NSAttributedString(
             data: productoPass.description_short.data(using: String.Encoding.unicode, allowLossyConversion: true)!,
             options: [ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
-            documentAttributes: nil)*/
-        dscrpcn.attributedText = myAttrString
-        
-        
-       // dscrpcn.attributedText = productoPass.description_short
+            documentAttributes: nil)
+        					
         buscarImagen(id: "\(productoPass.id)/\(productoPass.imagenes[0])", tipo: "products", imagenSize: "large_default", imagen: ImagenMuestra)
         
         //if (producto.getDescuentos() == null) {
@@ -151,14 +139,14 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
     
     
     func buscarImagen(id: String, tipo: String, imagenSize: String, imagen: UIImageView) {
-        
+        print("ID: \(id)")
         let url = URL(string: "\(self.facade.WEB_PAGE)/images/\(tipo)/\(id)/\(imagenSize)?\(facade.parametrosKey())")
 
         imagen.hnk_setImage(from: url!)
     }
     
     func buscarFeatures(features: [ProductFeatures], hijo: Int) {
-        Alamofire.request("\(self.facade.WEB_PAGE)/product_feature_values/\(features[hijo].id)?\(facade.parametrosBasicos())").validate().responseJSON { response in
+        Alamofire.request("\(self.facade.WEB_PAGE)/product_feature_values/\(features[hijo].id_feature_value)?\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
@@ -168,13 +156,13 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
                 }
             case .failure(let error):
                 self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-                print(error)        // Poner en comentario
+                print("ERROR \(error)")        // Poner en comentario
             }
         }
     }
     
     func buscarFeaturesMedidas(features: [ProductFeatures], hijo: Int, feature: ProductFeatures) {
-        Alamofire.request("\(self.facade.WEB_PAGE)/product_features/\(features[hijo].id_feature_value)?\(facade.parametrosBasicos())").validate().responseJSON { response in
+        Alamofire.request("\(self.facade.WEB_PAGE)/product_features/\(features[hijo].id)?\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
@@ -192,7 +180,7 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
         insertFeature(feature: feature)
         
         let hijoAux = hijo + 1
-        if (hijo < features.count) {
+        if (hijoAux < features.count) {
             buscarFeatures(features: features, hijo: hijoAux);
         }
     }
@@ -231,7 +219,8 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
     
     // Carrito
     func buscarUltimoCarrito() {
-        Alamofire.request("\(self.facade.WEB_PAGE)/carts?filter[id_customer]=\(ID_USUARIO)?\(facade.parametrosBasicos())").validate().responseJSON { response in
+        print("\(self.facade.WEB_PAGE)/carts?filter[id_customer]=\(ID_USUARIO)&\(facade.parametrosBasicos())")
+        Alamofire.request("\(self.facade.WEB_PAGE)/carts?filter[id_customer]=\(ID_USUARIO)&\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
@@ -250,7 +239,8 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
     }
     
     func validarQueCarritoNoSeaUnaOrden(id: String) {
-        Alamofire.request("\(self.facade.WEB_PAGE)/orders?filter[id_cart]=\(id)?\(facade.parametrosBasicos())").validate().responseJSON { response in
+        print("\(self.facade.WEB_PAGE)/orders?filter[id_cart]=\(id)&\(facade.parametrosBasicos())")
+        Alamofire.request("\(self.facade.WEB_PAGE)/orders?filter[id_cart]=\(id)&\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
@@ -269,6 +259,7 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
     }
     
     func buscarEnvios() {
+        print("\(self.facade.WEB_PAGE)/carriers?filter[deleted]=0&filter[active]=1&filter[is_free]=0&\(facade.parametrosBasicos())")
         Alamofire.request("\(self.facade.WEB_PAGE)/carriers?filter[deleted]=0&filter[active]=1&filter[is_free]=0&\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
@@ -288,8 +279,8 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
         let cantidad: Int = Int(self.stepper.value)
         let idProducto: String = productoPass.id
         let params: Parameters = Parameters()
-        cantidadPass = cantidad
         
+        print("\(self.facade.WEB_API_AUX)CCart.php?Create&delivery=\(idEnvio)&customer=\(ID_USUARIO)&product=\(idProducto)&quantity=\(cantidad)")
         Alamofire.request("\(self.facade.WEB_API_AUX)CCart.php?Create&delivery=\(idEnvio)&customer=\(ID_USUARIO)&product=\(idProducto)&quantity=\(cantidad)", method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).validate().responseJSON { response in
             switch response.result {
             case .success: break
@@ -302,19 +293,22 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
     }
     
     func buscarCarrito(id: String) {
+        print("\(self.facade.WEB_PAGE)/carts/\(id)?\(facade.parametrosBasicos())")
         Alamofire.request("\(self.facade.WEB_PAGE)/carts/\(id)?\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
                 if let JSON = response.result.value {
                     let carrito: Carrito = self.facade.buscarCarrito(res: JSON)
+                    print("Carrito: \(carrito.id)")
                     let idProduct: String = self.productoPass.id
                     var cantidadViaja: Int = 0
                     var i: Int = 0
                     var encontro: Bool = false
                     
-                    if (carrito.carritoDetalles.count == 0) {
+                    if (carrito.carritoDetalles.count != 0) {
                         for index in 0..<carrito.carritoDetalles.count {
                             let producto: CarritoDetalle = carrito.carritoDetalles[index]
+                            print("Carrito detalle: \(producto.id_product)")
                             if (idProduct == producto.id_product) {
                                 cantidadViaja = Int(producto.quantity)!
                                 i = index
@@ -324,11 +318,10 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
                         }
                     }
                     let cantidad: Int = Int(self.stepper.value)
+                    print("cantidad: \(cantidad) y encontro \(encontro)")
                     if (encontro) {
-                        self.cantidadPass = cantidadViaja + cantidad
                         self.actualizarCantidadProducto(id: id, row: i, cantidad: cantidad, cantidadViaja: cantidadViaja);
                     } else {
-                        self.cantidadPass = cantidad
                         self.incluirProductoAlCarrito(idCarrito: id, idProducto: idProduct, cantidad: cantidad);
                     }
                 }
@@ -347,6 +340,7 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
         }
         
         let params: Parameters = Parameters()
+        print("\(self.facade.WEB_API_AUX)UCartItemQuantity.php?id=\(id)&row=\(row)&qua=\(cantidadTotal)")
         Alamofire.request("\(self.facade.WEB_API_AUX)UCartItemQuantity.php?id=\(id)&row=\(row)&qua=\(cantidadTotal)", method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).validate().responseJSON { response in
             switch response.result {
             case .success: break
@@ -362,6 +356,7 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
     
     func incluirProductoAlCarrito(idCarrito: String, idProducto: String, cantidad: Int) {
         let params: Parameters = Parameters()
+        print("\(self.facade.WEB_API_AUX)AddItemToCart.php?idCart=\(idCarrito)&addItem=true&idPro=\(idProducto)&proQua=\(cantidad)")
         Alamofire.request("\(self.facade.WEB_API_AUX)AddItemToCart.php?idCart=\(idCarrito)&addItem=true&idPro=\(idProducto)&proQua=\(cantidad)", method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).validate().responseJSON { response in
             switch response.result {
             case .success: break
@@ -393,8 +388,9 @@ class ProductoDetalleViewController: UIViewController, UICollectionViewDelegate,
             let addEventViewController:ProductoDetalleModalController = segue.destination as! ProductoDetalleModalController
             
             addEventViewController.nombre_desc = self.productoPass.name
-            addEventViewController.cantidad_desc = "cantidad: \(self.cantidadPass)"
-            addEventViewController.total_desc = "total: $\(PRECIO_NETO * Double(cantidadPass))"
+
+            addEventViewController.cantidad_desc = "cantidad: \(Int(valorStepper.text!)!)"
+            addEventViewController.total_desc = "total: $\(PRECIO_NETO * Double(valorStepper.text!)!)"
             addEventViewController.imagen_desc = "\(self.productoPass.id)/\(self.productoPass.imagenes[0])"
             addEventViewController.ID_USUARIO = self.ID_USUARIO
         }

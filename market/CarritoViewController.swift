@@ -13,9 +13,8 @@ import Haneke
 
 class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
    
-    
+    // Pasar a kevin
     // poner progressbar everywhere
-    // al final obtener carrito con las cantidades?
     
     @IBOutlet weak var contenedorResumen: UIView!
     @IBOutlet weak var contenedorProductosScroll: UIScrollView!
@@ -77,9 +76,9 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBAction func checkDirecciones(_ sender: checkBox) {
         isCheckDirecciones = !isCheckDirecciones
         if (isCheckDirecciones) {
-            pickerDir2.isHidden = true
-        } else {
             pickerDir2.isHidden = false
+        } else {
+            pickerDir2.isHidden = true
         }
     }
     
@@ -113,6 +112,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         mostrarResumen(tipoPago: "Pagar contra reembolso", tipo: 1)
     }
     
+    @IBOutlet weak var siguiente1: UIButton!
     
     let facade: Facade = Facade()
     
@@ -181,13 +181,16 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         direccionesNavBar.tintColor = UIColor(red:255/255.0, green: 98/255.0, blue: 18/255.0, alpha: 1)
         
         pickerDir1.tag = 1
-        pickerDir2.tag = 2
+        pickerDir2.tag = 2 
         
         USUARIO_ID = UserDefaults.standard.string(forKey: "id")!
         
         pickerDir1.isHidden = false
         pickerDir2.isHidden = true
         
+        self.siguiente1.isEnabled = false
+        
+        checkDirecciones.isChecked = true
         checkTerminoServicio.isChecked = false
         
         if (carritoId == "no") {
@@ -212,9 +215,8 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print(row)
+
         if pickerView == pickerDir1 {
-            print(direcciones[row].id)
             DIR_ACT = Int(direcciones[row].id)!
         } else if pickerView == pickerDir2 {
             DIR_FAC = Int(direcciones[row].id)!
@@ -239,6 +241,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
             let producto = productos[indexPath.row]
             let precioNeto = preciosNetos[indexPath.row]
             cell.descripcion.text = producto.name
+            cell.producto_id = productos[indexPath.row].id
             cell.precioUnitario.text = "$ \(String(format: "%.2f", precioNeto))"
             cell.precioTotal.text = "$ \(String(format: "%.2f", precioNeto * Double(CARRITO_ACTUAL.carritoDetalles[indexPath.row].quantity)!))"
             cell.controller = self
@@ -247,7 +250,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
             buscarImagen(id: "\(producto.id)/\(producto.imagenes[0])", tipo: "products", imagenSize: "small_default", imagen: cell.imagen)
             
             buscarStock(stock: producto.stock_availables[0], cant: Int(CARRITO_ACTUAL.carritoDetalles[indexPath.row].quantity)!, stepper: cell.stepper, valor: cell.valor)
-
+            
             celi = cell
         } else if tableView == tableTransporte {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CarritoTransporteTableViewCell") as! CarritoTransporteTableViewCell
@@ -330,18 +333,27 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         CARRITO_ACTUAL = carrito
         //contenedorTotalPrecios.setVisibility(View.VISIBLE);
         var prod: [String] = [String]()
-        print(carrito.carritoDetalles.count)
         for index in 0..<carrito.carritoDetalles.count {
             let detalle: CarritoDetalle = carrito.carritoDetalles[index]
-            prod.append(detalle.id_product)
+            if (detalle.quantity != "0") {
+                prod.append(detalle.id_product)
+            }
+            
         }
  
-        buscarProductos(hijo: 0, prod: prod, carrito: carrito)
+        if (prod.count > 0) {
+            buscarProductos(hijo: 0, prod: prod, carrito: carrito)
+        } else {
+            mensaje(mensaje: "Su carrito está vacío.", cerrar: true)
+            return
+        }
+        
     }
     
     
     func buscarProductos(hijo: Int, prod: [String], carrito: Carrito) {
         print("\(facade.WEB_PAGE)/products/\(prod[hijo])?\(facade.parametrosBasicos())")
+        
         Alamofire.request("\(facade.WEB_PAGE)/products/\(prod[hijo])?\(facade.parametrosBasicos())").validate().responseJSON { response in
             switch response.result {
             case .success:
@@ -359,6 +371,17 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    func seguirBuscandoProducto(hijo: Int, carrito: Carrito, producto: [String]) {
+        
+        let hij: Int = hijo + 1
+        if (hij < CARRITO_ACTUAL.carritoDetalles.count) {     // ¿Hay mas productos?
+            self.buscarProductos(hijo: hij, prod: producto, carrito: carrito);
+        } else {
+            self.siguiente1.isEnabled = true
+            self.buscarEnvios(hijo: 0, imprimir: false);
+        }
+    }
+    
     func buscarImagen(id: String, tipo: String, imagenSize: String, imagen: UIImageView) {
         
         let url = URL(string: "\(self.facade.WEB_PAGE)/images/\(tipo)/\(id)/\(imagenSize)?\(facade.parametrosBasicos())")
@@ -371,22 +394,10 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableProductos.reloadData()
     }
     
-    func seguirBuscandoProducto(hijo: Int, carrito: Carrito, producto: [String]) {
-        
-        let hij: Int = hijo + 1
-        print("\(hij) < \(CARRITO_ACTUAL.carritoDetalles.count)")
-        if (hij < CARRITO_ACTUAL.carritoDetalles.count) {     // ¿Hay mas productos?
-            self.buscarProductos(hijo: hij, prod: producto, carrito: carrito);
-        } else {
-            self.buscarEnvios(hijo: 0, imprimir: false);
-        }
-    }
-    
     func calcularTotales() {
         let subtot = subtotal()
-        totalProducto.text = "$ \(subtotal())"
+        totalProducto.text = "$ \(subtot)"
         let precioTr:String = (totalEnvio.text?.replacingOccurrences(of: "$ ", with: ""))!
-        print(precioTr)
         precioTransporte = Double(precioTr)!
         let tot: Double = subtot + precioTransporte
         total.text = "$ \(tot)"
@@ -399,7 +410,6 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
             case .success:
                 if let JSON = response.result.value {
                     let cantidad: String = self.facade.buscarStock(res: JSON)
-                    print(cantidad)
                     if (cantidad != "Este producto ya no está disponible") {
                         stepper.maximumValue = Double(cantidad)!
                     } else {
@@ -419,14 +429,11 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func subtotal() -> Double {
         var acum: Double = 0.0
+        
         for index in 0..<productos.count {
             
-            
-            let indexs = IndexPath.init(row: index, section: 0)
-            let cell = tableProductos.cellForRow(at: indexs) as! CarritoProductoTableViewCell
-            let precioNeto = preciosNetos[index]
-            
-            acum += precioNeto * Double(cell.valor.text!)!
+            let precio: Double = (Double(preciosNetos[index]) * Double(CARRITO_ACTUAL.carritoDetalles[index].quantity)!)
+            acum += precio
         }
         return acum;
     }
@@ -551,7 +558,6 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
                         let precio: Double = self.calcularPrecioEnvio(envio: envio)
                         self.preciosCarriers.append(precio)
                         self.totalEnvio.text = "$ \(String(format: "%.2f", Double(deliveries.price)!))"
-                        print("calcularTotales")
                         self.calcularTotales()
                         //conversor.ActionProcessButtonValidation(btnSiguienteCarrito, true);
                     }
@@ -665,12 +671,12 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         /*
          final int DEFAULT_TIMEOUT = 20 * 1000;
          client.setTimeout(DEFAULT_TIMEOUT);*/
-        
         let id_address_delivery = DIR_ACT
         let id_address_invoice = (checkDirecciones.isChecked) ? DIR_ACT : DIR_FAC
         let id_cart = CARRITO_ACTUAL.id
         let id_currency = 1
         let id_lang = 1
+        let id_customer = USUARIO_ID
         let id_carrier = envio_id[EnvioActivo]
         let module = MODULE
         let payment = PAYMENT
@@ -680,24 +686,28 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         let total_products_wt = (totalProducto.text?.replacingOccurrences(of: "$ ", with: ""))!
         let conversion_rate = 1
         
-        let params: [String: Any] = ["id_address_delivery": id_address_delivery, "id_address_invoice": id_address_invoice, "id_cart": id_cart, "id_currency": id_currency, "id_lang": id_lang, "id_carrier": id_carrier, "module": module, "payment": payment, "total_paid": total_paid, "total_paid_real": total_paid_real, "total_products": total_products, "total_products_wt": total_products_wt, "conversion_rate": conversion_rate]
-        
-        Alamofire.request("\(facade.WEB_API_AUX)CCartOrder.php?", method: .post, parameters: params, encoding: JSONEncoding.default).validate().responseJSON {
-            response in
-            switch response.result {
-            case .success: break
-                
-            /*case .failure(let error):
-                self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-                print(error)
-            */
-            default:
-                self.buscarOrderRealizada()
+        var request = URLRequest(url: URL(string: "\(facade.WEB_API_AUX)CCartOrder.php")!)
+        request.httpMethod = "POST"
+        let postString = "id_address_delivery=\(id_address_delivery)&id_address_invoice=\(id_address_invoice)&id_cart=\(id_cart)&id_currency=\(id_currency)&id_lang=\(id_lang)&id_customer=\(id_customer)&id_carrier=\(id_carrier)&module=\(module)&payment=\(payment)&total_paid=\(total_paid)&total_paid_real=\(total_paid_real)&total_products=\(total_products)&total_products_wt=\(total_products_wt)&conversion_rate=\(conversion_rate)"
+        request.httpBody = postString.data(using: .utf8)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                print("error=\(error)")
+                return
             }
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(response)")
+            }
+            
+            let responseString = String(data: data, encoding: .utf8)
+            print("responseString = \(responseString)")
+            
+            self.buscarOrderRealizada()
         }
-        
+        task.resume()
     }
-    
     
     
     func buscarOrderRealizada() {
@@ -723,6 +733,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
             case .success:
                 if let JSON = response.result.value {
                     let order: Order = self.facade.buscarOrden(res: JSON)
+                    print("ORDER_ID: \(order.id)")
                     if (self.PAYMENT == "Cash on delivery (COD)") {
                         self.irPago(importe: "", propietario: "", datos: "", banco: "", referencia: order.reference)
                     } else {
@@ -739,7 +750,8 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarConfBankAddress(order: Order) {
-        Alamofire.request("\(facade.WEB_PAGE)/configurations?filter[name]=BANK_WIRE_ADDRESS?\(facade.parametrosBasicos())").validate().responseJSON { response in
+        print("\(facade.WEB_PAGE)/configurations?filter[name]=BANK_WIRE_ADDRESS&\(facade.parametrosBasicos())")
+        Alamofire.request("\(facade.WEB_PAGE)/configurations?filter[name]=BANK_WIRE_ADDRESS&\(facade.parametrosBasicos())").validate().responseJSON { response in
             
             switch response.result {
             case .success:
@@ -757,6 +769,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarValorConfBankAddress(id: String, order: Order) {
+        print("\(facade.WEB_PAGE)/configurations/\(id)?\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/configurations/\(id)?\(facade.parametrosBasicos())").validate().responseJSON { response in
             
             switch response.result {
@@ -776,7 +789,8 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarConfProp(banco: String, order: Order) {
-        Alamofire.request("\(facade.WEB_PAGE)/configurations?filter[name]=BANK_WIRE_OWNER?\(facade.parametrosBasicos())").validate().responseJSON { response in
+        print("\(facade.WEB_PAGE)/configurations?filter[name]=BANK_WIRE_OWNER&\(facade.parametrosBasicos())")
+        Alamofire.request("\(facade.WEB_PAGE)/configurations?filter[name]=BANK_WIRE_OWNER&\(facade.parametrosBasicos())").validate().responseJSON { response in
             
             switch response.result {
             case .success:
@@ -795,7 +809,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarValorConfProp(id: String, banco: String, order: Order) {
-        
+        print("\(facade.WEB_PAGE)/configurations/\(id)?\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/configurations/\(id)?\(facade.parametrosBasicos())").validate().responseJSON { response in
             
             switch response.result {
@@ -814,7 +828,8 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarConfDatos(propietario: String, banco: String, order: Order) {
-        Alamofire.request("\(facade.WEB_PAGE)/configurations?filter[name]=BANK_WIRE_DETAILS?\(facade.parametrosBasicos())").validate().responseJSON { response in
+        print("\(facade.WEB_PAGE)/configurations?filter[name]=BANK_WIRE_DETAILS&\(facade.parametrosBasicos())")
+        Alamofire.request("\(facade.WEB_PAGE)/configurations?filter[name]=BANK_WIRE_DETAILS&\(facade.parametrosBasicos())").validate().responseJSON { response in
             
             switch response.result {
             case .success:
@@ -834,6 +849,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func buscarValorConfDatos(id: String, propietario: String, banco: String, order: Order) {
+        print("\(facade.WEB_PAGE)/configurations/\(id)?\(facade.parametrosBasicos())")
         Alamofire.request("\(facade.WEB_PAGE)/configurations/\(id)?\(facade.parametrosBasicos())").validate().responseJSON { response in
             
             switch response.result {
@@ -860,7 +876,7 @@ class CarritoViewController: UIViewController, UITableViewDelegate, UITableViewD
         referenciaPass = referencia
         
         self.performSegue(withIdentifier: "PagoViewController", sender: self)
-        dismiss(animated: true, completion: nil)
+        //dismiss(animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

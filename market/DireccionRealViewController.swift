@@ -16,6 +16,7 @@ class DireccionRealViewController: UIViewController {
     var dirPass: Direccion = Direccion()
     var nuevaDir: Bool = false
     
+    @IBOutlet weak var ruc: UITextField!
     @IBOutlet weak var txtNombre: UITextField!
     @IBOutlet weak var txtApellido: UITextField!
     @IBOutlet weak var txtCompany: UITextField!
@@ -29,14 +30,13 @@ class DireccionRealViewController: UIViewController {
     @IBOutlet weak var txtAdicional: UITextField!
     @IBOutlet weak var txtAlias: UITextField!
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if (self.dirPass.alias == ""){
             self.navigationItem.title = "Dirección"
             nuevaDir = true
+            limpiarCampos()
         }else{
             self.navigationItem.title = self.dirPass.alias
             txtNombre.text = dirPass.firstname
@@ -51,7 +51,6 @@ class DireccionRealViewController: UIViewController {
             txtTelefono2.text = dirPass.phone_mobile
             txtAdicional.text = dirPass.other
             txtAlias.text = dirPass.alias
-            
         }
         navigationController?.navigationBar.barTintColor = UIColor(red:255/255.0, green: 98/255.0, blue: 18/255.0, alpha: 1)
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
@@ -59,6 +58,21 @@ class DireccionRealViewController: UIViewController {
         // Poner los valores en los txt
     }
     
+    func limpiarCampos() {
+        txtNombre.text = ""
+        txtApellido.text = ""
+        ruc.text = ""
+        txtCompany.text = ""
+        txtDireccion1.text = ""
+        txtDireccion2.text = ""
+        txtCiudad.text = ""
+        txtEstado.text = "Azuay"
+        txtPais.text = "Ecuador"
+        txtTelefono1.text = ""
+        txtTelefono2.text = ""
+        txtAdicional.text = ""
+        txtAlias.text = ""
+    }
     
     @IBAction func guardar(_ sender: Any) {
         if (nuevaDir) {
@@ -82,33 +96,41 @@ class DireccionRealViewController: UIViewController {
         let phone_mobile = txtTelefono2.text
         let other = txtAdicional.text
         let alias = txtAlias.text
+        let dni = ruc.text
         
-        
-        if ( (firstname?.isEmpty)! || (lastname?.isEmpty)! || (address1?.isEmpty)! || (city?.isEmpty)! || (state?.isEmpty)! || (id_country.isEmpty) || ((phone?.isEmpty)! && (phone_mobile?.isEmpty)!) || (alias?.isEmpty)!) {
+        if ( (firstname?.isEmpty)! || (lastname?.isEmpty)! || (dni?.isEmpty)! || (address1?.isEmpty)! || (city?.isEmpty)! || (state?.isEmpty)! || (id_country.isEmpty) || ((phone?.isEmpty)! && (phone_mobile?.isEmpty)!) || (alias?.isEmpty)!) {
             
             mensaje(mensaje: "Rellene los campos requeridos", cerrar: false)
             return;
         }
         
+        let idcustomer = "\(UserDefaults.standard.value(forKey: "id")!)"
         let id = dirPass.id //ADDRESS ID?
         
-        //POST?
-        let params: [String: Any] = ["id": id, "firstname": firstname!, "lastname": lastname!, "company": company!, "address1": address1!, "address2": address2!, "city": city!, "state": state!, "id_country": id_country, "phone": phone!, "phone_mobile": phone_mobile!, "other": other!, "alias": alias!]
-        
-        Alamofire.request("\(facade.WEB_API_AUX)UAddress.php?id=\(id)", method: .post, parameters: params, encoding: JSONEncoding.default).validate().responseJSON {
+        var request = URLRequest(url: URL(string: "\(facade.WEB_API_AUX)UAddress.php?id=\(id)")!)
+        request.httpMethod = "POST"
+        let postString = "id_customer=\(idcustomer)&id=\(id)&firstname=\(firstname!)&lastname=\(lastname!)&company=\(company!)&address1=\(address1!)&address2=\(address2!)&city=\(city!)&id_state=313&id_country=81&phone=\(phone!)&phone_mobile=\(phone_mobile!)&other=\(other!)&alias=\(alias!)&dni=\(dni)"
+        print("AQUIII \(postString)")
+        request.httpBody = postString.data(using: .utf8)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                print("error=\(error)")
+                return
+            }
             
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(response)")
+            }
             
-            response in
-            switch response.result {
-            case .success: break
-                
-            //case .failure(let error):
-            //    self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-            //    print(error)
-            default:
-                self.mensaje(mensaje: "Cambios guardados!", cerrar: false)
+            let responseString = String(data: data, encoding: .utf8)
+            print("responseString = \(responseString)")
+            
+            DispatchQueue.main.sync {
+                self.mensaje(mensaje: "Cambios guardados!", cerrar: true)
             }
         }
+        task.resume()
     }
     
     
@@ -125,37 +147,42 @@ class DireccionRealViewController: UIViewController {
         let phone_mobile = txtTelefono2.text
         let other = txtAdicional.text
         let alias = txtAlias.text
+        let dni = ruc.text
         
-        
-        if ((firstname?.isEmpty)! && (lastname?.isEmpty)! && (address1?.isEmpty)! && (city?.isEmpty)! && (state?.isEmpty)! && (id_country.isEmpty) && ((phone?.isEmpty)! || (phone_mobile?.isEmpty)!) && (alias?.isEmpty)!) {
+        if ( (firstname?.isEmpty)! || (lastname?.isEmpty)! || (dni?.isEmpty)! || (address1?.isEmpty)! || (city?.isEmpty)! || (state?.isEmpty)! || (id_country.isEmpty) || ((phone?.isEmpty)! && (phone_mobile?.isEmpty)!) || (alias?.isEmpty)!) {
             
             mensaje(mensaje: "Rellene los campos requeridos", cerrar: false)
             return;
         }
-        let id_customer = UserDefaults.standard.value(forKey: "id")
         
+        let idcustomer = "\(UserDefaults.standard.value(forKey: "id")!)"
+        let id = dirPass.id //ADDRESS ID?
         
-        //POST?
-        let params: [String: Any] = ["firstname": firstname!, "lastname": lastname!, "company": company!, "address1": address1!, "address2": address2!, "city": city!, "state": state!, "id_country": id_country, "phone": phone!, "phone_mobile": phone_mobile!, "other": other!, "alias": alias!, "id_customer": id_customer!]
-        
-        Alamofire.request("\(facade.WEB_API_AUX)CAddress.php?Create=Creating", method: .post, parameters: params, encoding: JSONEncoding.default).validate().responseJSON {
+        var request = URLRequest(url: URL(string: "\(facade.WEB_API_AUX)CAddress.php?Create=Creating")!)
+        request.httpMethod = "POST"
+        let postString = "id_customer=\(idcustomer)&id=\(id)&firstname=\(firstname!)&lastname=\(lastname!)&company=\(company!)&address1=\(address1!)&address2=\(address2!)&city=\(city!)&id_state=313&id_country=81&phone=\(phone!)&phone_mobile=\(phone_mobile!)&other=\(other!)&alias=\(alias!)&dni=\(dni)"
+        print("AQUIII \(postString)")
+        request.httpBody = postString.data(using: .utf8)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                print("error=\(error)")
+                return
+            }
             
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(response)")
+            }
             
-            response in
-            switch response.result {
-            case .success: break
-                
-            //case .failure(let error):
-            //    self.mensaje(mensaje: self.facade.ERROR_LOADING, cerrar: false)
-            //    print(error)
-            default:
-                self.mensaje(mensaje: "Direccióón Registrada!", cerrar: false)
+            let responseString = String(data: data, encoding: .utf8)
+            print("responseString = \(responseString)")
+            
+            DispatchQueue.main.sync {
+                self.mensaje(mensaje: "Direccióón Registrada!", cerrar: true)
             }
         }
-        
+        task.resume()
     }
-    
-    
     
     func mensaje(mensaje: String, cerrar: Bool) {
         let mostrarMensaje = UIAlertController(title: "Mensaje", message: mensaje, preferredStyle: UIAlertControllerStyle.alert)
